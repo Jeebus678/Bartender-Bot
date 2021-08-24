@@ -40,7 +40,7 @@
         "vodka": 0,
         "tomato juice": 0,
         "tabasco Sauce": 0,
-        "worcestershire Sauce": 0
+        "worcestershire sauce": 0
     },
     "Brandy Alexander": {
         "cognac": 0,
@@ -83,7 +83,7 @@
         "white vermouth": 0
     },
     "Dubonnet Cocktail": {
-        "Dubonnet": 0,
+        "dubonnet": 0,
         "gin": 0
     },
     "Espresso Martini": {
@@ -94,7 +94,7 @@
     },
     "French 75": {
         "gin": 0,
-        "Prosecco": 0,
+        "prosecco": 0,
         "lemon juice": 0,
         "soda": 0,
         "simple syrup": 0

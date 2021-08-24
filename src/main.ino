@@ -17,14 +17,6 @@ void setup(){
   // Determine input drinks and their volumes.
   // Determine all the potential drinks based off input drinks
   // and save them as objects. 
-  pinMode(0, OUTPUT);
-  pinMode(1, OUTPUT);
-  pinMode(2, OUTPUT);
-  pinMode(3, OUTPUT);
-  pinMode(4, OUTPUT);
-  pinMode(5, OUTPUT);
-  pinMode(6, OUTPUT);
-  pinMode(7, OUTPUT);
 }
 
 void loop(){
