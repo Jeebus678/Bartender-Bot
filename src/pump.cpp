@@ -1,4 +1,4 @@
-#include <pump.h>
+#include <Pump.h>
 
 Pump::Pump(unsigned char pin) {
   this->pin = pin;
