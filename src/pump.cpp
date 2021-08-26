@@ -12,6 +12,11 @@ void Pump::init() {
 void Pump::on() {
   digitalWrite(pin, HIGH);
 }
+
 void Pump::off() {
   digitalWrite(pin, LOW);
+}
+
+void Pump::label(String drink){
+  this->drink = drink;
 }
