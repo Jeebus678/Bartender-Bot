@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include <ArduinoJson.h>
 #include <MCUFRIEND_kbv.h>
 #include <TouchScreen.h>
 #include <Adafruit_GFX.h>
@@ -53,22 +52,5 @@ struct cocktailData
 
 void loadCocktail(const char *filename, cocktailData &data, String drinkName)
 {
-    File jsonCocktailList = SD.open(filename);
-    const size_t bufferSize = JSON_OBJECT_SIZE(1) + 6 * JSON_OBJECT_SIZE(2) + 28 * JSON_OBJECT_SIZE(3) + 11 * JSON_OBJECT_SIZE(4) + 7 * JSON_OBJECT_SIZE(5) + JSON_OBJECT_SIZE(6) + 3 * JSON_OBJECT_SIZE(8) + JSON_OBJECT_SIZE(56);
-    StaticJsonDocument<bufferSize> doc;
-    // DeserializationError error = deserializeJson(doc, filename);
-    // if (error)
-    // {
-    //   Serial.println(F("Failed to read file, using default configuration"));
-    //   Serial.println(error.f_str());
-    // }
-
-    JsonObject root = doc.as<JsonObject>();
-    for (JsonPair kv : root)
-    {
-        // int i = 0;
-        // data.portions[i][0] = ;
-        Serial.println(kv.key().c_str());
-    }
-    jsonCocktailList.close();
+    
 }
