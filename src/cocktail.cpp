@@ -1,3 +1,50 @@
+typedef struct {
+    char liquor[20];
+    uint8_t portion;
+  } Ingridient;
+  
+  typedef struct {
+    char name[20];
+    Ingridient ingridients[7];
+  } Cocktail;
+
+  Cocktail cocktails[] = {
+    {"Americano", { {"campari", 1}, {"red vermouth", 2}, {"soda", 3} } },
+    {"Aviation", { {"gin", 1}, {"cherry liqueur", 2}, {"creme de violette", 3}, {"lemon juice", 4} } },
+    {"B52 Cocktail", { {"kahlua", 1}, {"baileys", 2}, {"trand marnier", 3} } }
+};
+
+
+ //---------- Read a struct from file
+  Cocktail c[3];  //struct for holding the content from the file
+  
+  File fileToRead = SPIFFS.open("/cocktails.txt");
+  
+  if(fileToRead) {
+    Serial.println("Data from file...");
+    for (int i=0; i<3; i++) {
+      fileToRead.read( (byte *) &c[i], sizeof(c[i]) );
+      Serial.println(c[i].name);
+      int n = 0;
+      while (strlen(c[i].ingridients[n].liquor)) {
+        Serial.print(c[i].ingridients[n].liquor);
+        Serial.print(" - ");
+        Serial.print(c[i].ingridients[n].portion);
+        n++;
+      }
+      Serial.println();
+    }
+  }
+
+  fileToRead.close();
+}
+
+
+
+
+
+
+
 {
     "Americano": {
         "campari": 0,
