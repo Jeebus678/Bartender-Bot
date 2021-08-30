@@ -8,6 +8,10 @@
 #include <string.h>
 using namespace std;
 
+const uint8_t chipSelect = 10; // Sets the SD chip-select pin, enabled on Mega through SOFT-SPI
+Sd2Card card;
+SdFile root;
+
 
 void setup()
 {
@@ -15,11 +19,15 @@ void setup()
     while (!Serial)
         continue;
 
+    pinMode(SS, OUTPUT); // Required for SD library to function
+    while (!card.init(SPI_HALF_SPEED, chipSelect)) {
+    Serial.println("SD initialization failed."); 
+  } 
     //   loadCocktail(filename, data, "Americano");
     // Set up all control pins, touch screen, etc.
     // Determine input drinks and their volumes.
-    // Determine all the potential drinks based off input drinks
-    // and save them as objects.
+    // Determine all the potential drinks based off 
+    // input drinks and save them as objects.
 }
 
 void loop()
@@ -51,4 +59,31 @@ void loop()
 // void loadCocktail(const char *filename, cocktailData &data, String drinkName)
 // {
     
+// }
+
+//---------- Read a struct from file
+// Cocktail c[3]; //struct for holding the content from the file
+
+// File fileToRead = SPIFFS.open("/cocktails.txt");
+
+// if (fileToRead)
+// {
+//   Serial.println("Data from file...");
+//   for (int i = 0; i < 3; i++)
+//   {
+//     fileToRead.read((byte *)&c[i], sizeof(c[i]));
+//     Serial.println(c[i].name);
+//     int n = 0;
+//     while (strlen(c[i].ingridients[n].liquor))
+//     {
+//       Serial.print(c[i].ingridients[n].liquor);
+//       Serial.print(" - ");
+//       Serial.print(c[i].ingridients[n].portion);
+//       n++;
+//     }
+//     Serial.println();
+//   }
+// }
+
+// fileToRead.close();
 // }

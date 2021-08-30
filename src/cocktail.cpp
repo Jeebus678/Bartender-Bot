@@ -68,29 +68,4 @@ Cocktail cocktails[] = {
     {"Woo Woo", {{"vodka", 0}, {"peach schnapps", 0}, {"cranberry juice", 0}}},
     {"Zombie", {{"overproof rum", 0}, {"dark rum", 0}, {"white rum", 0}, {"curacao", 0}, {"orange juice", 0}, {"lemon juice", 0}, {"grenadine", 0}, {"angostura bitters", 0}}}};
 
-//---------- Read a struct from file
-Cocktail c[3]; //struct for holding the content from the file
 
-File fileToRead = SPIFFS.open("/cocktails.txt");
-
-if (fileToRead)
-{
-  Serial.println("Data from file...");
-  for (int i = 0; i < 3; i++)
-  {
-    fileToRead.read((byte *)&c[i], sizeof(c[i]));
-    Serial.println(c[i].name);
-    int n = 0;
-    while (strlen(c[i].ingridients[n].liquor))
-    {
-      Serial.print(c[i].ingridients[n].liquor);
-      Serial.print(" - ");
-      Serial.print(c[i].ingridients[n].portion);
-      n++;
-    }
-    Serial.println();
-  }
-}
-
-fileToRead.close();
-}
