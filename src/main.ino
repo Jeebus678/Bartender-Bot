@@ -14,8 +14,6 @@ void setup()
     Serial.begin(9600);
     while (!Serial)
         continue;
-    
-
 
     //   loadCocktail(filename, data, "Americano");
     // Set up all control pins, touch screen, etc.
@@ -42,15 +40,15 @@ void loop()
 
 // JsonObject getJSonFromFile(DynamicJsonDocument *cocktailList, String filename, bool forceCleanONJsonError = true)
 
-const char *filename = "/cocktail.json";
+// const char *filename = "/cocktail.json";
 
-struct cocktailData
-{
-    char name[25];
-    const char *portions[7][1];
-} data;
+// struct cocktailData
+// {
+//     char name[25];
+//     const char *portions[7][1];
+// } data;
 
-void loadCocktail(const char *filename, cocktailData &data, String drinkName)
-{
+// void loadCocktail(const char *filename, cocktailData &data, String drinkName)
+// {
     
-}
+// }
