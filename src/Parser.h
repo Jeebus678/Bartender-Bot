@@ -2,6 +2,7 @@
 #define PARSER_H_
 #include <SD.h>
 #include <stdio.h>
+#include <Pump.h>
 
 class parser
 {
@@ -32,12 +33,14 @@ public:
     const char endLine = '}';
     const char newLine = '$';
 
-    // Functions 
+    // Functions
     void clearBuffer();
     void setFile(const char *filename);
-    void getRecipe(const char *name);
+    int seekChar(char *delimiter); 
     char *bufferString(unsigned int position, char delimiter);
-    void parse(char *name);
+    void getRecipeString(const char *name);
+    void getRecipe(char *name);
+    char* getOptions(Pump labels[], int size);
 };
 
 #endif

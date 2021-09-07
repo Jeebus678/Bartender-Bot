@@ -1,15 +1,16 @@
 // Basic SD card parser
-// 
-// Function Architechture: 
+//
+// Function Architechture:
 // Once the parse() function is called it passes the name parameter to
-// getRecipe(). It scans through the file, looking for an item with a 
-// matching name (so $_name_ for example). getRecipe() also calls on 
-// bufferString() multiple times, which reads starting from a position 
-// until a delimiter from the SD card.  
+// getRecipeString(). It scans through the file, looking for an item with a
+// matching name (so $_name_ for example). getRecipeString() also calls on
+// bufferString() multiple times, which reads starting from a position
+// until a delimiter from the SD card.
 
 #include <parser.h>
 #include <SD.h>
 #include <stdio.h>
+#include <Pump.h>
 
 void parser::clearBuffer()
 {
@@ -24,7 +25,39 @@ void parser::setFile(const char *filename)
     file = SD.open(filename, FILE_READ);
 }
 
-void parser::getRecipe(const char *name) // Retrieve a cocktail's recipe string
+int parser::seekChar(char *delimiter)
+{ // Will set and return the position of the next desired delimiter
+    fileSize = file.size();
+    for (unsigned int i = file.position(); i <= fileSize; i++)
+    {
+        file.seek(i);
+        readByte = file.peek();
+        if (readByte == *delimiter)
+        {
+            return file.position();
+            break;
+        }
+    }
+}
+
+char *parser::bufferString(unsigned int position, char delimiter) // Get any string from a starting position until a specified delimiter
+{
+    clearBuffer();
+    file.seek(position + 1);
+    for (unsigned int n = file.position();; n++) // Iterate forward infinitely
+    {
+        file.seek(n);
+        readByte = file.peek();
+        if (readByte == delimiter) // If delimiter detected
+        {
+            file.seek(position);
+            file.read(buffer, n - position);
+            return buffer;
+        }
+    }
+}
+
+void parser::getRecipeString(const char *name) // Retrieve a cocktail's recipe string
 {
     if (file)
     {
@@ -50,35 +83,79 @@ void parser::getRecipe(const char *name) // Retrieve a cocktail's recipe string
         Serial.println("Error: Failed to open file.");
 }
 
-char *parser::bufferString(unsigned int position, char delimiter) // Get any string from a starting position until a specified delimiter
+// This section is incomplete
+char *parser::getOptions(Pump labels[], int size)
 {
-    clearBuffer();
-    file.seek(position + 1);
-    for (unsigned int n = file.position();; n++) // Iterate forward infinitely
+    if (file)
     {
-        file.seek(n);
-        readByte = file.peek();
-        if (readByte == delimiter) // If delimiter detected
+        char *p;
+        char *o;
+        fileSize = file.size();
+        boolean ingrBool = false;
+        boolean drinkBool = true;
+        pos = 0;
+        int posStart;
+        for (unsigned int i = pos; i <= fileSize; i++) // Loop through entire file
         {
-            file.seek(position);
-            file.read(buffer, n - position);
-            return buffer;
+            file.seek(i);
+            readByte = file.peek();
+            if (readByte == newLine)
+            {
+                posStart = file.position();
+            }
+            if (readByte == newArray) // Stop at every new array
+            {
+                pos = file.position() + 1;
+                bufferString(pos, endLine); // Buffer the rest of the string
+                for (p = strtok(buffer, ";"); p != NULL; p = strtok(NULL, ";"))
+                {
+                    o = strchr(p, ',');
+                    *o = '\0'; // Cuts off everything except the ingredient name
+                    // Serial.println(p);
+                    for (unsigned int n = 0; n < 8; n++)
+                    {
+                        if (strcmp(p, labels[n].drink) == 0)
+                        {
+                            ingrBool = true;
+                            Serial.println(p);
+                            // break;
+                        }
+                    }
+                    if (ingrBool == false)
+                    {
+                        drinkBool = false;
+                        // break;
+                    }
+                }
+            }
+            else if (readByte == endLine)
+            {
+                if (drinkBool == true)
+                {
+                    file.seek(posStart + 1);
+                    bufferString(file.position(), newArray);
+                    Serial.println(buffer);
+                    return buffer;
+                }
+            }
         }
     }
+    else
+        Serial.println("Error: Failed to open file.");
 }
 
-void parser::parse(char *name)
+void parser::getRecipe(char *name)
 {
     char *p;
     uint8_t n = 0;
     uint8_t iter = 0;
     boolean recipeString = false;
-    getRecipe(name);  // Stores input name into buffer
+    getRecipeString(name); // Stores input name into buffer
     for (p = strtok(buffer, "{,;"); p != NULL; p = strtok(NULL, "{,;"))
     {
         if (recipeString == false) // If name is not read
         {
-            strcpy(cocktail.name, p); 
+            strcpy(cocktail.name, p);
             recipeString = true;
         }
         else if (recipeString == true) // If name is read

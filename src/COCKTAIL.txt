@@ -1,22 +1,22 @@
-$Americano{Campari, red vermouth, soda water}
+$Americano{campari, red vermouth, soda water}
 $Aviation{gin, cherry liqueur, creme de violette, lemon juice}
-$B52 Cocktail{Kahlua, Baileys Irish Cream, Grand Marnier}
-$Barracuda{amber rum, Galliano, sparkling wine, lime juice, pineapple juice}
-$Bellini{Prosecco (dry sparkling white wine), peach juice (puree)}
-$BetweenThe Sheets{white rum, Cognac, Cointreau, lemon juice}
+$B52 cocktail{Kahlua, baileys irish cream, grand marnier}
+$Barracuda{amber rum, galliano, sparkling wine, lime juice, pineapple juice}
+$Bellini{prosecco (dry sparkling white wine), peach juice (puree)}
+$BetweenThe Sheets{white rum, cognac, cointreau, lemon juice}
 $Black Russian{kahlua (Tia Maria), vodka}
 $Bloody Mary{vodka, tomato juice, Tabasco Sauce, Worcestershire Sauce}
-$Brandy Alexander{Cognac, white creme de cacao, cream (milk)}
+$Brandy Alexander{cognac, white creme de cacao, cream (milk)}
 $Caipirinha{cachaca, lime juice, sugar}
 $Caipiroska{vodka, lime juice (any fresh fruit), sugar}
-$Cosmopolitan{vodka, Cointreau (triple sec), cranberry juice, lime juice}
+$Cosmopolitan{vodka, cointreau (triple sec), cranberry juice, lime juice}
 $Cuba Libre{white rum, cola, lime juice}
 $Daiquiri{white rum, lime juice, simple syrup}
 $Dirty Martini{vodka, white vermouth, olive brine}
 $Dry Martini{gin, white vermouth}
 $Dubonnet Cocktail{Dubonnet, gin}
 $Espresso Martini{vodka, kahlua, espresso, simple syrup}
-$French 75{gin, Champagne (Prosecco), lemon juice, soda water, simple syrup}
+$French 75{gin, champagne (Prosecco), lemon juice, soda water, simple syrup}
 $French Martini{vodka, raspberry liqueur, pineapple juice}
 $Fuzzy Navel{vodka, peach schnapps, orange juice}
 $Gimlet{gin, Rose’s Lime (lime juice), simple syrup}
@@ -28,15 +28,15 @@ $Hurricane{dark rum, white rum, lime juice, passionfruit syrup, grenadine}
 $Irish Coffee{Irish whiskey, black coffee, brown sugar, whipping cream}
 $Lemon Drop Martini{vodka, triple sec, lemon juice}
 $Long Island Iced Tea{gin, tequila, white rum, vodka, triple sec, lemon juice, cola, simple syrup}
-$Mai Tai{dark rum, Curacao, lemon juice, grenadine, orgeat syrup}
+$Mai Tai{dark rum, curacao, lemon juice, grenadine, orgeat syrup}
 $Manhattan{rye whisky, red vermouth, Angostura bitters}
-$Margarita{tequila, Cointreau, triple sec, lime juice}
+$Margarita{tequila, cointreau, triple sec, lime juice}
 $Martini (Classic){gin, white vermouth}
 $Mint Julep{bourbon, mint, water, sugar}
 $Mojito{white rum, lime juice, mint, water, sugar}
 $Moscow Mule{vodka, ginger beer, lime juice}
 $Mudslide{vodka, kahlua, Baileys, cream (milk), whipping cream}
-$Negroni{gin, Campari, red vermouth}
+$Negroni{gin, campari, red vermouth}
 $Old Fashioned{rye (Bourbon), Angostura Bitters, simple syrup}
 $Pimm’s Cup{Pimm’s #1, ginger ale, soda water}
 $Pina Colada{white rum, pineapple juice, coconut cream (milk)}

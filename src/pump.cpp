@@ -17,6 +17,6 @@ void Pump::off() {
   digitalWrite(pin, LOW);
 }
 
-void Pump::label(String drink){
+void Pump::label(char *drink){
   this->drink = drink;
 }

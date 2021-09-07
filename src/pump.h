@@ -1,21 +1,24 @@
 #ifndef PUMP_H
 #define PUMP_H
 #include <Arduino.h>
-#include <String.h> 
-using namespace std; 
+#include <String.h>
+using namespace std;
 
 class Pump
 {
 private:
     unsigned char pin;
-    String drink; 
-    bool status;
+
 public:
+    const char *drink = "Campari";
+    bool status;
     Pump(unsigned char pin);
-    void label(String drink); 
-    void init(); 
+    void label(char *drink);
+    void init();
     void on();
-    void off(); // Will use ASync delay 
+    void off(); // Will use ASync delay
 };
+
+
 
 #endif
