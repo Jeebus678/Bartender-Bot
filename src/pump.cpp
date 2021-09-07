@@ -1,22 +1,30 @@
 #include <Pump.h>
 
-Pump::Pump(unsigned char pin) {
+Pump::Pump(unsigned char pin)
+{
   this->pin = pin;
   init();
 }
 
-void Pump::init() {
+void Pump::init()
+{
   pinMode(pin, OUTPUT);
 }
 
-void Pump::on() {
+void Pump::on()
+{
   digitalWrite(pin, HIGH);
+  status = true;
 }
 
-void Pump::off() {
+void Pump::off()
+{
   digitalWrite(pin, LOW);
+  status = false;
 }
 
-void Pump::label(char *drink){
+void Pump::label(char *drink)
+{
   this->drink = drink;
 }
+

@@ -10,7 +10,7 @@ private:
     unsigned char pin;
 
 public:
-    const char *drink = "Campari";
+    const char *drink = "gin";
     bool status;
     Pump(unsigned char pin);
     void label(char *drink);

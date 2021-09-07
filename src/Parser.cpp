@@ -103,7 +103,7 @@ char *parser::getOptions(Pump labels[], int size)
             {
                 posStart = file.position();
             }
-            if (readByte == newArray) // Stop at every new array
+            else if (readByte == newArray) // Stop at every new array
             {
                 pos = file.position() + 1;
                 bufferString(pos, endLine); // Buffer the rest of the string
@@ -117,27 +117,26 @@ char *parser::getOptions(Pump labels[], int size)
                         if (strcmp(p, labels[n].drink) == 0)
                         {
                             ingrBool = true;
-                            Serial.println(p);
-                            // break;
+                            Serial.println(p); // Prints Campari 3 times, then red vermouth, then stops
+                            break;
                         }
                     }
-                    if (ingrBool == false)
+                    if (ingrBool == true)
                     {
                         drinkBool = false;
                         // break;
                     }
                 }
             }
-            else if (readByte == endLine)
+            else if ((readByte == endLine) && (drinkBool == true))
             {
-                if (drinkBool == true)
-                {
-                    file.seek(posStart + 1);
-                    bufferString(file.position(), newArray);
-                    Serial.println(buffer);
-                    return buffer;
-                }
+                file.seek(posStart + 1);
+                bufferString(file.position(), newArray);
+                // Serial.println(buffer);
+                return buffer;
             }
+            else
+                continue;
         }
     }
     else
