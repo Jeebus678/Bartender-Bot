@@ -10,7 +10,6 @@
 #include <parser.h>
 #include <SD.h>
 #include <stdio.h>
-#include <Pump.h>
 
 void parser::clearBuffer()
 {
@@ -37,6 +36,8 @@ int parser::seekChar(char *delimiter)
             return file.position();
             break;
         }
+        else
+            continue;
     }
 }
 
@@ -78,66 +79,7 @@ void parser::getRecipeString(const char *name) // Retrieve a cocktail's recipe s
                 }
             }
         }
-    }
-    else
-        Serial.println("Error: Failed to open file.");
-}
-
-// This section is incomplete
-char *parser::getOptions(Pump labels[], int size)
-{
-    if (file)
-    {
-        char *p;
-        char *o;
-        fileSize = file.size();
-        boolean ingrBool = false;
-        boolean drinkBool = true;
-        pos = 0;
-        int posStart;
-        for (unsigned int i = pos; i <= fileSize; i++) // Loop through entire file
-        {
-            file.seek(i);
-            readByte = file.peek();
-            if (readByte == newLine)
-            {
-                posStart = file.position();
-            }
-            else if (readByte == newArray) // Stop at every new array
-            {
-                pos = file.position() + 1;
-                bufferString(pos, endLine); // Buffer the rest of the string
-                for (p = strtok(buffer, ";"); p != NULL; p = strtok(NULL, ";"))
-                {
-                    o = strchr(p, ',');
-                    *o = '\0'; // Cuts off everything except the ingredient name
-                    // Serial.println(p);
-                    for (unsigned int n = 0; n < 8; n++)
-                    {
-                        if (strcmp(p, labels[n].drink) == 0)
-                        {
-                            ingrBool = true;
-                            Serial.println(p); // Prints Campari 3 times, then red vermouth, then stops
-                            break;
-                        }
-                    }
-                    if (ingrBool == true)
-                    {
-                        drinkBool = false;
-                        // break;
-                    }
-                }
-            }
-            else if ((readByte == endLine) && (drinkBool == true))
-            {
-                file.seek(posStart + 1);
-                bufferString(file.position(), newArray);
-                // Serial.println(buffer);
-                return buffer;
-            }
-            else
-                continue;
-        }
+        file.close();
     }
     else
         Serial.println("Error: Failed to open file.");

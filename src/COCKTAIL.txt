@@ -1,59 +1,59 @@
-$Americano{campari, red vermouth, soda water}
-$Aviation{gin, cherry liqueur, creme de violette, lemon juice}
-$B52 cocktail{Kahlua, baileys irish cream, grand marnier}
-$Barracuda{amber rum, galliano, sparkling wine, lime juice, pineapple juice}
-$Bellini{prosecco (dry sparkling white wine), peach juice (puree)}
-$BetweenThe Sheets{white rum, cognac, cointreau, lemon juice}
-$Black Russian{kahlua (Tia Maria), vodka}
-$Bloody Mary{vodka, tomato juice, Tabasco Sauce, Worcestershire Sauce}
-$Brandy Alexander{cognac, white creme de cacao, cream (milk)}
-$Caipirinha{cachaca, lime juice, sugar}
-$Caipiroska{vodka, lime juice (any fresh fruit), sugar}
-$Cosmopolitan{vodka, cointreau (triple sec), cranberry juice, lime juice}
-$Cuba Libre{white rum, cola, lime juice}
-$Daiquiri{white rum, lime juice, simple syrup}
-$Dirty Martini{vodka, white vermouth, olive brine}
-$Dry Martini{gin, white vermouth}
-$Dubonnet Cocktail{Dubonnet, gin}
-$Espresso Martini{vodka, kahlua, espresso, simple syrup}
-$French 75{gin, champagne (Prosecco), lemon juice, soda water, simple syrup}
-$French Martini{vodka, raspberry liqueur, pineapple juice}
-$Fuzzy Navel{vodka, peach schnapps, orange juice}
-$Gimlet{gin, Rose’s Lime (lime juice), simple syrup}
-$Gin Fizz{gin, lemon juice, soda water, simple syrup}
-$Harvey Wallbanger{vodka, Galliano, orange juice}
-$Hot Buttered Rum{dark rum, hot water, cloves, brown sugar, butter}
-$Hot Toddy{brandy, honey, hot water}
-$Hurricane{dark rum, white rum, lime juice, passionfruit syrup, grenadine}
-$Irish Coffee{Irish whiskey, black coffee, brown sugar, whipping cream}
-$Lemon Drop Martini{vodka, triple sec, lemon juice}
-$Long Island Iced Tea{gin, tequila, white rum, vodka, triple sec, lemon juice, cola, simple syrup}
-$Mai Tai{dark rum, curacao, lemon juice, grenadine, orgeat syrup}
-$Manhattan{rye whisky, red vermouth, Angostura bitters}
-$Margarita{tequila, cointreau, triple sec, lime juice}
-$Martini (Classic){gin, white vermouth}
-$Mint Julep{bourbon, mint, water, sugar}
-$Mojito{white rum, lime juice, mint, water, sugar}
-$Moscow Mule{vodka, ginger beer, lime juice}
-$Mudslide{vodka, kahlua, Baileys, cream (milk), whipping cream}
-$Negroni{gin, campari, red vermouth}
-$Old Fashioned{rye (Bourbon), Angostura Bitters, simple syrup}
-$Pimm’s Cup{Pimm’s #1, ginger ale, soda water}
-$Pina Colada{white rum, pineapple juice, coconut cream (milk)}
-$Pink Lady{gin, grenadine, cream (milk)}
-$Pink Martini{vodka, white vermouth, grenadine, orange bitters}
-$Pisco Sour{pisco, lime juice, egg white, simple syrup, Angostura Bitters}
-$Rob Roy{scotch, sweet vermouth, Angostura Bitters}
-$Rusty Nail{scotch, Drambuie}
-$Sex On The Beach{vodka, peach schnapps, cranberry juice, orange juice}
-$Sidecar{Cognac (brandy), Cointreau (triple sec), lemon juice}
-$Singapore Sling (Original){gin, Cointreau, Benedictine, Cherry Heering, pineapple juice, lime juice, grenadine, Angostura Bitters}
-$Singapore Sling (Simple){gin, cherry brandy, lemon juice, grenadine, soda water, simple syrup}
-$Tequila Sunrise{tequila, orange juice, grenadine}
-$Tom Collins{gin, lemon juice, simple syrup, soda water}
-$Vesper{gin, vodka, Lillet blanc}
-$Whiskey Sour{rye, lemon juice, simple syrup}
-$White Russian{kahlua, vodka, cream (milk)}
-$Woo Woo{vodka, peach schnapps, cranberry juice}
-$Zombie{overproof rum, dark rum, white rum, curacao (triple sec), orange juice, lemon juice, grenadine, Angostura Bitters}
+$Americano{campari,0;red vermouth,0;soda water,0}
+$Aviation{gin,0;cherry liqueur,0;creme de violette,0;lemon juice,0}
+$B52 cocktail{kahlua,0;baileys,0;grand marnier,0}
+$Barracuda{amber rum,0;galliano,0;sparkling wine,0;lime juice,0;pineapple juice,0}
+$Bellini{champagne,0;peach juice,0}
+$BetweenThe Sheets{white rum,0;cognac,0;cointreau,0;lemon juice,0}
+$Black Russian{kahlua,0;vodka,0}
+$Bloody Mary{vodka,0;tomato juice,0;tobasco sauce,0;worcestershire sauce,0}
+$Brandy Alexander{cognac,0;white creme de cacao,0;cream (milk),0}
+$Caipirinha{cachaca,0;lime juice,0;sugar,0}
+$Caipiroska{vodka,0;lime juice,0;sugar,0}
+$Cosmopolitan{vodka,0;cointreau,0;cranberry juice,0;lime juice,0}
+$Cuba Libre{white rum,0;cola,0;lime juice,0}
+$Daiquiri{white rum,0;lime juice,0;simple syrup,0}
+$Dirty Martini{vodka,0;white vermouth,0;olive brine,0}
+$Dry Martini{gin,0;white vermouth,0}
+$Dubonnet Cocktail{dubonnet,0;gin,0}
+$Espresso Martini{vodka,0;kahlua,0;espresso,0;simple syrup,0}
+$French 75{gin,0;champagne,0;lemon juice,0;soda water,0;simple syrup,0}
+$French Martini{vodka,0;raspberry liqueur,0;pineapple juice,0}
+$Fuzzy Navel{vodka,0;peach schnapps,0;orange juice,0}
+$Gimlet{gin,0;lime juice,0;simple syrup,0}
+$Gin Fizz{gin,0;lemon juice,0;soda water,0;simple syrup,0}
+$Harvey Wallbanger{vodka,0;galliano,0;orange juice,0}
+$Hot Buttered Rum{dark rum,0;hot water,0;cloves,0;brown sugar,0;butter,0}
+$Hot Toddy{brandy,0;honey,0;hot water,0}
+$Hurricane{dark rum,0;white rum,0;lime juice,0;passionfruit syrup,0;grenadine,0}
+$Irish Coffee{irish whiskey,0;black coffee,0;brown sugar,0;whipping cream,0}
+$Lemon Drop Martini{vodka,0;triple sec,0;lemon juice,0}
+$Long Island Iced Tea{gin,0;tequila,0;white rum,0;vodka,0;triple sec,0;lemon juice,0;cola,0;simple syrup,0}
+$Mai Tai{dark rum,0;curacao,0;lemon juice,0;grenadine,0;orgeat syrup,0}
+$Manhattan{rye whisky,0;red vermouth,0;angostura bitters,0}
+$Margarita{tequila,0;cointreau,0;triple sec,0;lime juice,0}
+$Martini (Classic){gin,0;white vermouth,0}
+$Mint Julep{bourbon,0;mint,0;water,0;sugar,0}
+$Mojito{white rum,0;lime juice,0;mint,0;water,0;sugar,0}
+$Moscow Mule{vodka,0;ginger beer,0;lime juice,0}
+$Mudslide{vodka,0;kahlua,0;baileys,0;cream (milk),0;whipping cream,0}
+$Negroni{gin,0;campari,0;red vermouth,0}
+$Old Fashioned{bourbon,0;angostura Bitters,0;simple syrup,0}
+$Pimm’s Cup{pimm’s #1,0;ginger ale,0;soda water,0}
+$Pina Colada{white rum,0;pineapple juice,0;coconut cream (milk),0}
+$Pink Lady{gin,0;grenadine,0;cream (milk),0}
+$Pink Martini{vodka,0;white vermouth,0;grenadine,0;orange bitters,0}
+$Pisco Sour{pisco,0;lime juice,0;egg white,0;simple syrup,0;angostura bitters,0}
+$Rob Roy{scotch,0;sweet vermouth,0;Angostura Bitters,0}
+$Rusty Nail{scotch,0;Drambuie,0}
+$Sex On The Beach{vodka,0;peach schnapps,0;cranberry juice,0;orange juice,0}
+$Sidecar{Cognac (brandy),0;Cointreau (triple sec),0;lemon juice,0}
+$Singapore Sling (Original){gin,0;cointreau,0;benedictine,0;cherry heering,0;pineapple juice,0;lime juice,0;grenadine,0;angostura bitters,0}
+$Singapore Sling (Simple){gin,0;cherry brandy,0;lemon juice,0;grenadine,0;soda water,0;simple syrup,0}
+$Tequila Sunrise{tequila,0;orange juice,0;grenadine,0}
+$Tom Collins{gin,0;lemon juice,0;simple syrup,0;soda water,0}
+$Vesper{gin,0;vodka,0;lillet blanc,0}
+$Whiskey Sour{rye,0;lemon juice,0;simple syrup,0}
+$White Russian{kahlua,0;vodka,0;cream (milk),0}
+$Woo Woo{vodka,0;peach schnapps,0;cranberry juice,0}
+$Zombie{overproof rum,0;dark rum,0;white rum,0;triple sec,0;orange juice,0;lemon juice,0;grenadine,0;angostura bitters,0}
 

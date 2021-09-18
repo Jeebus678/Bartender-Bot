@@ -13,33 +13,26 @@ const uint8_t chipSelect = 10; // Sets the SD chip-select pin, enabled on Mega t
 char *drinkName;
 
 parser Parser;
-Pump pump1(1), pump2(2), pump3(3), pump4(4), pump5(5), pump6(6), pump7(7), pump8(8);
-Pump *allPumps[8] = {&pump1, &pump2, &pump3, &pump4, &pump5, &pump6, &pump7, &pump8};
+Pump pump1(1), pump2(2), pump3(3), pump4(4), pump5(5), pump6(6), pump7(7), pump8(8), pump9(9), pump10(10);
+ Pump *allPumps[10] = {&pump1, &pump2, &pump3, &pump4, &pump5, &pump6, &pump7, &pump8, &pump9, &pump10};
 
-void pump(int *mL, char *liquor[30])
-{
-    // unsigned long currentMillis;
-    // unsigned long lastMillis;
-    // unsigned int onMillis;
-    int seconds = *mL * 0.6;
-    for (unsigned short i = 0; i < sizeof(allPumps); i++)
-    {
-        if (strcmp(allPumps[i]->drink, *liquor) == 0)
-        {
-            // currentMillis = millis();
-            allPumps[i]->on();
-            delay(seconds * 1000);
-            allPumps[i]->off();
-        }
-    }
-}
-
-// getOptions():
-// Go through every ingridient of every line one by one
-// search for the ingridient string in every pump label
-// if true in one of them, copy cocktail name to a string array
-// and move on to the next ingridient
-// if all are false, break to the next line
+// void pump(int *mL, char *liquor[30])
+// {
+//     // unsigned long currentMillis;
+//     // unsigned long lastMillis;
+//     // unsigned int onMillis;
+//     int seconds = *mL * 0.6;
+//     for (unsigned short i = 0; i < sizeof(allPumps); i++)
+//     {
+//         if (strcmp(allPumps[i]->drink, *liquor) == 0)
+//         {
+//             // currentMillis = millis();
+//             allPumps[i]->on();
+//             delay(seconds * 1000);
+//             allPumps[i]->off();
+//         }
+//     }
+// }
 
 void setup()
 {
@@ -55,7 +48,31 @@ void setup()
     Serial.println("SD initialization done.");
 
     Parser.setFile("RECIPES.txt");
-    Serial.println(Parser.getOptions(allPumps[8], sizeof(8)));
+
+    pump1.drink = "campari";
+    pump2.drink = "vodka";
+    pump3.drink = "soda water";
+    pump4.drink = "gin";
+    pump5.drink = "lemon juice";
+    pump6.drink = "cointreau";
+    pump7.drink = "white rum";
+    pump8.drink = "cognac";
+    pump9.drink = "simple syrup";
+    pump10.drink = "dark rum";
+
+    Parser.getOptions(allPumps);
+    Serial.println("\n \n");
+    // for (uint8_t i = 0; i < sizeof(allPumps); i++)
+    // {
+    //     if (allPumps[i]->drink == NULL)
+    //     {
+    //         break;
+    //     }
+    //     else
+    //     {
+    //         Serial.println(allPumps[i]->drink);
+    //     }
+    // }
 }
 
 void loop()

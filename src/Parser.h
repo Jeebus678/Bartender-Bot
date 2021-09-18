@@ -36,11 +36,74 @@ public:
     // Functions
     void clearBuffer();
     void setFile(const char *filename);
-    int seekChar(char *delimiter); 
+    int seekChar(char *delimiter);
     char *bufferString(unsigned int position, char delimiter);
     void getRecipeString(const char *name);
     void getRecipe(char *name);
-    char* getOptions(Pump labels[], int size);
+
+    template <size_t N>
+    void getOptions(Pump *(&allPumps)[N])
+    {
+        char drinksBuffer[100][100]; 
+        if (file)
+        {
+            char *p;
+            char *o;
+            fileSize = file.size();
+            pos = 0;
+            int posStart;
+            int counter = 0;
+            int drinkCount = 0; 
+            int maxMembers = 0;
+            for (unsigned int i = pos; i <= fileSize; i++) // Loop through entire file
+            {
+                file.seek(i);
+                readByte = file.peek();
+                if (readByte == newLine)
+                {
+                    posStart = file.position();
+                }
+                else if (readByte == newArray) // Stop at every new array
+                {
+                    counter = 0;
+                    maxMembers = 0;
+                    pos = file.position() + 1;
+                    bufferString(pos, endLine); // Buffer the rest of the string
+                    for (p = strtok(buffer, ";"); p != NULL; p = strtok(NULL, ";"))
+                    {
+                        maxMembers++;
+                        o = strchr(p, ',');
+                        *o = '\0'; // Cuts off everything except the ingredient name
+                        for (unsigned int n = 0; n < N; n++)
+                        {
+                            if ((strcmp(allPumps[n]->drink, p) == 0))
+                            {
+                                counter++;
+                                break;
+                            }
+                        }
+                    }
+                }
+                else if ((readByte == endLine) && (counter == maxMembers))
+                {
+                    file.seek(posStart + 1);
+                    bufferString(file.position(), newArray);
+                    Serial.println(buffer);
+                    // strcpy(drinksBuffer[drinkCount], buffer);
+                    // Serial.println(drinksBuffer[drinkCount]); 
+                    // drinkCount++;
+                    // return buffer;
+                    // file.close();
+                    // return;
+                }
+            }
+            file.close();
+            return;
+        }
+        else
+            Serial.println("Error: Failed to open file.");
+        return;
+    }
 };
 
 #endif
