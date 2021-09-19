@@ -25,18 +25,19 @@ public:
     Drink cocktail;
     unsigned int fileSize;
     unsigned int pos = 0;
-    char buffer[100];
+    char buffer[250];
     char readByte;
     const char newArray = '{';
     const char newElement = ';';
     const char divider = ',';
     const char endLine = '}';
     const char newLine = '$';
+    char drinksBuffer[20][30]; // Holds list of drink names
 
     // Functions
     void clearBuffer();
     void setFile(const char *filename);
-    int seekChar(char *delimiter);
+    void seekChar(char delimiter);
     char *bufferString(unsigned int position, char delimiter);
     void getRecipeString(const char *name);
     void getRecipe(char *name);
@@ -44,7 +45,6 @@ public:
     template <size_t N>
     void getOptions(Pump *(&allPumps)[N])
     {
-        char drinksBuffer[100][100]; 
         if (file)
         {
             char *p;
@@ -53,9 +53,9 @@ public:
             pos = 0;
             int posStart;
             int counter = 0;
-            int drinkCount = 0; 
+            int drinkCount = 0;
             int maxMembers = 0;
-            for (unsigned int i = pos; i <= fileSize; i++) // Loop through entire file
+            for (unsigned int i = pos; i < fileSize; i++) // Loop through entire file
             {
                 file.seek(i);
                 readByte = file.peek();
@@ -88,21 +88,17 @@ public:
                 {
                     file.seek(posStart + 1);
                     bufferString(file.position(), newArray);
-                    Serial.println(buffer);
-                    // strcpy(drinksBuffer[drinkCount], buffer);
-                    // Serial.println(drinksBuffer[drinkCount]); 
-                    // drinkCount++;
-                    // return buffer;
-                    // file.close();
-                    // return;
+                    strcpy(drinksBuffer[drinkCount], buffer);
+                    drinkCount++;
                 }
             }
             file.close();
-            return;
+            return; 
         }
         else
+        {
             Serial.println("Error: Failed to open file.");
-        return;
+        }
     }
 };
 

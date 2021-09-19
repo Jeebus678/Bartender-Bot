@@ -24,17 +24,17 @@ void parser::setFile(const char *filename)
     file = SD.open(filename, FILE_READ);
 }
 
-int parser::seekChar(char *delimiter)
+void parser::seekChar(char delimiter)
 { // Will set and return the position of the next desired delimiter
     fileSize = file.size();
     for (unsigned int i = file.position(); i <= fileSize; i++)
     {
         file.seek(i);
         readByte = file.peek();
-        if (readByte == *delimiter)
+        if (readByte == delimiter)
         {
-            return file.position();
-            break;
+            file.seek(file.position()); 
+            return;
         }
         else
             continue;

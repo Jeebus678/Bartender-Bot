@@ -14,7 +14,7 @@ char *drinkName;
 
 parser Parser;
 Pump pump1(1), pump2(2), pump3(3), pump4(4), pump5(5), pump6(6), pump7(7), pump8(8), pump9(9), pump10(10);
- Pump *allPumps[10] = {&pump1, &pump2, &pump3, &pump4, &pump5, &pump6, &pump7, &pump8, &pump9, &pump10};
+Pump *allPumps[10] = {&pump1, &pump2, &pump3, &pump4, &pump5, &pump6, &pump7, &pump8, &pump9, &pump10};
 
 // void pump(int *mL, char *liquor[30])
 // {
@@ -47,34 +47,31 @@ void setup()
     }
     Serial.println("SD initialization done.");
 
-    Parser.setFile("RECIPES.txt");
-
     pump1.drink = "campari";
     pump2.drink = "vodka";
     pump3.drink = "soda water";
     pump4.drink = "gin";
     pump5.drink = "lemon juice";
     pump6.drink = "cointreau";
-    pump7.drink = "white rum";
-    pump8.drink = "cognac";
+    pump7.drink = "red vermouth";
+    pump8.drink = "triple sec";
     pump9.drink = "simple syrup";
-    pump10.drink = "dark rum";
+    pump10.drink = "white vermouth";
 
+    Parser.setFile("RECIPES.txt");
     Parser.getOptions(allPumps);
-    Serial.println("\n \n");
-    // for (uint8_t i = 0; i < sizeof(allPumps); i++)
-    // {
-    //     if (allPumps[i]->drink == NULL)
-    //     {
-    //         break;
-    //     }
-    //     else
-    //     {
-    //         Serial.println(allPumps[i]->drink);
-    //     }
-    // }
+    for (uint8_t i = 0; i < sizeof(Parser.drinksBuffer[0]); i++)
+    {
+        if (Parser.drinksBuffer[0][i] == '\0')
+        {
+            break;
+        }
+        else
+            Serial.println(Parser.drinksBuffer[i]);
+    }
 }
 
 void loop()
 {
+  
 }
