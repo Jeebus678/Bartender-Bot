@@ -2,14 +2,16 @@
 //
 // Function Architechture:
 // Once the parse() function is called it passes the name parameter to
-// getRecipeString(). It scans through the file, looking for an item with a
-// matching name (so $_name_ for example). getRecipeString() also calls on
+// lexer(). It scans through the file, looking for an item with a
+// matching name (so $_name_ for example). lexer() also calls on
 // bufferString() multiple times, which reads starting from a position
 // until a delimiter from the SD card.
 
-#include <parser.h>
+#include "parser.h"
 #include <SD.h>
 #include <stdio.h>
+
+parser Parser;
 
 void parser::clearBuffer()
 {
@@ -19,30 +21,45 @@ void parser::clearBuffer()
     }
 }
 
+void parser::clearCocktail()
+{
+    unsigned int ingrIterate = 0;
+    Parser.cocktail.name[0] = '\0';
+    while (Parser.cocktail.ingridients[ingrIterate].liquor[0] != '\0')
+    {
+        Parser.cocktail.ingridients[ingrIterate].liquor[0] = '\0';
+        Parser.cocktail.ingridients[ingrIterate].portion = 0;
+        ingrIterate++;
+    }
+}
+
+void parser::close()
+{
+    file.close();
+}
+
 void parser::setFile(const char *filename)
 {
     file = SD.open(filename, FILE_READ);
 }
 
-void parser::seekChar(char delimiter)
+bool parser::seekChar(int position, char delimiter)
 { // Will set and return the position of the next desired delimiter
-    fileSize = file.size();
-    for (unsigned int i = file.position(); i <= fileSize; i++)
+    int i = 0;
+    while (buffer[i] != '\0')
     {
-        file.seek(i);
-        readByte = file.peek();
-        if (readByte == delimiter)
+        if (buffer[i] == delimiter)
         {
-            file.seek(file.position()); 
-            return;
+            file.seek(position + i + 1);
+            return true;
         }
-        else
-            continue;
+        i++;
     }
+    return false;
 }
 
-char *parser::bufferString(unsigned int position, char delimiter) // Get any string from a starting position until a specified delimiter
-{
+char *parser::bufferString(unsigned int position, char delimiter)
+{ // Get any string from a starting position until a specified delimiter
     clearBuffer();
     file.seek(position + 1);
     for (unsigned int n = file.position();; n++) // Iterate forward infinitely
@@ -58,8 +75,8 @@ char *parser::bufferString(unsigned int position, char delimiter) // Get any str
     }
 }
 
-void parser::getRecipeString(const char *name) // Retrieve a cocktail's recipe string
-{
+void parser::lexer(const char *name)
+{ // Split up the buffer string into according sub strings
     if (file)
     {
         fileSize = file.size();
@@ -72,14 +89,32 @@ void parser::getRecipeString(const char *name) // Retrieve a cocktail's recipe s
             {
                 pos = file.position();
                 bufferString(pos + 1, newArray);
-                if (strcmp(buffer, name) == 0)
-                {                                   // Does the name parameter match the buffer string?
-                    bufferString(pos + 1, endLine); // If it does, save the drink to the buffer
-                    break;
+                if (strcmp(buffer, name) == 0) // Does the name match the input parameter?
+                {
+                    bufferString(pos + 1, endLine);
+                    seekChar(pos, newArray);
+                    bufferString(pos + 1, endArray);
+                    strcpy(Parser.recipe, buffer);
+                    bufferString(pos + 1, endLine);
+                    Serial.println(buffer);
+                    if (seekChar(pos, newRequire))
+                    { // If '[' is a char in the buffer
+                        bufferString(file.position() + 1, endRequire);
+                        strcpy(Parser.required, buffer);
+                        Serial.println(Parser.required);
+                        bufferString(pos + 1, endLine);
+                    }
+                    if (seekChar(pos, newGarnish))
+                    { // If '(' is a char in the buffer
+                        bufferString(file.position() + 1, endGarnish);
+                        strcpy(Parser.garnish, buffer);
+                        Serial.println(Parser.garnish);
+                        bufferString(pos + 1, endLine);
+                    }
                 }
             }
         }
-        file.close();
+        // file.close();
     }
     else
         Serial.println("Error: Failed to open file.");
@@ -90,35 +125,38 @@ void parser::getRecipe(char *name)
     char *p;
     uint8_t n = 0;
     uint8_t iter = 0;
-    boolean recipeString = false;
-    getRecipeString(name); // Stores input name into buffer
-    for (p = strtok(buffer, "{,;"); p != NULL; p = strtok(NULL, "{,;"))
+    bool recipeString = false;
+    lexer(name); // Stores input name into buffer
+    clearCocktail();
+    for (p = strtok(recipe, ",;{}"); p != NULL; p = strtok(NULL, ",;{}"))
     {
         if (recipeString == false) // If name is not read
         {
-            strcpy(cocktail.name, p);
+            strcpy(Parser.cocktail.name, p);
             recipeString = true;
         }
         else if (recipeString == true) // If name is read
         {
             if ((iter % 2) == 0) // Evens are liquor names
             {
-                strcpy(cocktail.ingridients[n].liquor, p);
+                strcpy(Parser.cocktail.ingridients[n].liquor, p);
                 iter++;
             }
             else if ((iter % 2) == 1) // Odds are portion sizes
             {
-                strcpy(cocktail.ingridients[n].portion, p);
+                Parser.cocktail.ingridients[n].portion = atoi(p);
                 iter++;
                 n++; // Iterate through ingridients[8]
             }
         }
     }
     // Used for troubleshooting- comment out when not needed
-    Serial.println(cocktail.name);
-    for (int i = 0; i < 8; i++)
-    {
-        Serial.println(cocktail.ingridients[i].liquor);
-        Serial.println(cocktail.ingridients[i].portion);
-    }
+    // Serial.println(Parser.cocktail.name);
+    // unsigned int i = 0;
+    // while (Parser.cocktail.ingridients[i].liquor[0] != '\0')
+    // {
+    //     Serial.println(Parser.cocktail.ingridients[i].liquor);
+    //     Serial.println(Parser.cocktail.ingridients[i].portion);
+    //     i++;
+    // }
 }

@@ -1,0 +1,4 @@
+Will save machine settings
+
+num pumps = 8 
+

@@ -29,6 +29,16 @@
             "projectEnvName": "megaatmega2560",
             "toolchainBinDir": "C:/Users/16786/.platformio/packages/toolchain-atmelavr/bin",
             "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "platformio-debug",
+            "request": "launch",
+            "name": "PIO Debug (without uploading)",
+            "executable": "C:/Users/16786/Desktop/Bartender/.pio/build/megaatmega2560/firmware.elf",
+            "projectEnvName": "megaatmega2560",
+            "toolchainBinDir": "C:/Users/16786/.platformio/packages/toolchain-atmelavr/bin",
+            "internalConsoleOptions": "openOnSessionStart",
+            "loadMode": "manual"
         }
     ]
 }

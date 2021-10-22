@@ -1,59 +1,108 @@
-$Americano{campari,0;red vermouth,0;soda water,0}
-$Aviation{gin,0;cherry liqueur,0;creme de violette,0;lemon juice,0}
-$B52 cocktail{kahlua,0;baileys,0;grand marnier,0}
-$Barracuda{amber rum,0;galliano,0;sparkling wine,0;lime juice,0;pineapple juice,0}
-$Bellini{champagne,0;peach juice,0}
-$BetweenThe Sheets{white rum,0;cognac,0;cointreau,0;lemon juice,0}
-$Black Russian{kahlua,0;vodka,0}
-$Bloody Mary{vodka,0;tomato juice,0;tobasco sauce,0;worcestershire sauce,0}
-$Brandy Alexander{cognac,0;white creme de cacao,0;cream (milk),0}
-$Caipirinha{cachaca,0;lime juice,0;sugar,0}
-$Caipiroska{vodka,0;lime juice,0;sugar,0}
-$Cosmopolitan{vodka,0;cointreau,0;cranberry juice,0;lime juice,0}
-$Cuba Libre{white rum,0;cola,0;lime juice,0}
-$Daiquiri{white rum,0;lime juice,0;simple syrup,0}
-$Dirty Martini{vodka,0;white vermouth,0;olive brine,0}
-$Dry Martini{gin,0;white vermouth,0}
-$Dubonnet Cocktail{dubonnet,0;gin,0}
-$Espresso Martini{vodka,0;kahlua,0;espresso,0;simple syrup,0}
-$French 75{gin,0;champagne,0;lemon juice,0;soda water,0;simple syrup,0}
-$French Martini{vodka,0;raspberry liqueur,0;pineapple juice,0}
-$Fuzzy Navel{vodka,0;peach schnapps,0;orange juice,0}
-$Gimlet{gin,0;lime juice,0;simple syrup,0}
-$Gin Fizz{gin,0;lemon juice,0;soda water,0;simple syrup,0}
-$Harvey Wallbanger{vodka,0;galliano,0;orange juice,0}
-$Hot Buttered Rum{dark rum,0;hot water,0;cloves,0;brown sugar,0;butter,0}
-$Hot Toddy{brandy,0;honey,0;hot water,0}
-$Hurricane{dark rum,0;white rum,0;lime juice,0;passionfruit syrup,0;grenadine,0}
-$Irish Coffee{irish whiskey,0;black coffee,0;brown sugar,0;whipping cream,0}
-$Lemon Drop Martini{vodka,0;triple sec,0;lemon juice,0}
-$Long Island Iced Tea{gin,0;tequila,0;white rum,0;vodka,0;triple sec,0;lemon juice,0;cola,0;simple syrup,0}
-$Mai Tai{dark rum,0;curacao,0;lemon juice,0;grenadine,0;orgeat syrup,0}
-$Manhattan{rye whisky,0;red vermouth,0;angostura bitters,0}
-$Margarita{tequila,0;cointreau,0;triple sec,0;lime juice,0}
-$Martini (Classic){gin,0;white vermouth,0}
-$Mint Julep{bourbon,0;mint,0;water,0;sugar,0}
-$Mojito{white rum,0;lime juice,0;mint,0;water,0;sugar,0}
-$Moscow Mule{vodka,0;ginger beer,0;lime juice,0}
-$Mudslide{vodka,0;kahlua,0;baileys,0;cream (milk),0;whipping cream,0}
-$Negroni{gin,0;campari,0;red vermouth,0}
-$Old Fashioned{bourbon,0;angostura Bitters,0;simple syrup,0}
-$Pimm’s Cup{pimm’s #1,0;ginger ale,0;soda water,0}
-$Pina Colada{white rum,0;pineapple juice,0;coconut cream (milk),0}
-$Pink Lady{gin,0;grenadine,0;cream (milk),0}
-$Pink Martini{vodka,0;white vermouth,0;grenadine,0;orange bitters,0}
-$Pisco Sour{pisco,0;lime juice,0;egg white,0;simple syrup,0;angostura bitters,0}
-$Rob Roy{scotch,0;sweet vermouth,0;Angostura Bitters,0}
-$Rusty Nail{scotch,0;Drambuie,0}
-$Sex On The Beach{vodka,0;peach schnapps,0;cranberry juice,0;orange juice,0}
-$Sidecar{Cognac (brandy),0;Cointreau (triple sec),0;lemon juice,0}
-$Singapore Sling (Original){gin,0;cointreau,0;benedictine,0;cherry heering,0;pineapple juice,0;lime juice,0;grenadine,0;angostura bitters,0}
-$Singapore Sling (Simple){gin,0;cherry brandy,0;lemon juice,0;grenadine,0;soda water,0;simple syrup,0}
-$Tequila Sunrise{tequila,0;orange juice,0;grenadine,0}
-$Tom Collins{gin,0;lemon juice,0;simple syrup,0;soda water,0}
-$Vesper{gin,0;vodka,0;lillet blanc,0}
-$Whiskey Sour{rye,0;lemon juice,0;simple syrup,0}
-$White Russian{kahlua,0;vodka,0;cream (milk),0}
-$Woo Woo{vodka,0;peach schnapps,0;cranberry juice,0}
-$Zombie{overproof rum,0;dark rum,0;white rum,0;triple sec,0;orange juice,0;lemon juice,0;grenadine,0;angostura bitters,0}
-
+$Absinthe Frappe{Absinthe,4;Simple Syrup,1;Water,6)?
+    $Adonis{Cherry Liqueur,8;Red Vermouth,4}[Orange Bitters](Orange Peel)?
+    $Airmail{Gold Rum,6;Lime Juice,3;Honey Syrup,3}(Lime or Orange Peel)?
+    $Americano{Campari,6;Red Vermouth,6;Soda Water,4}(Orange Slice)?
+    $Americano Perfecto{Campari,6;Red Vermouth,6}[pilsner Beer](Orange Wheel)?
+    $Aperol Spritz{Aperol,4;Prosecco,8;Soda Water,4}(Orange or Lemon Slice)?
+    $Aviation{Gin,8;Cherry Liqueur,1;Creme de Violette,1;Lemon Juice,2}(Brandied Cherry)?
+    $Angostura Colada{Rum,2;Pineapple Juice,8;Lime Juice,4}[Angostura Bitters, Coconut Cream](Orange Slice,nutmet)?
+    $Archangel{Gin,8;Aperol,3}(Lemon Peel)?
+    $B52 Cocktail{Coffee Liqueur,4;Baileys,4;Grand Marnier,4}?
+    $Barracuda{White Rum,6;Galliano,6;Prosecco,4;Lime Juice,1;Pineapple Juice,6}?
+    $Bee's Knees{Gin,6;Honey Syrup,3;Lemon Juice,3}(Lemon Wheel)?
+    $Bellini{Prosecco,16;Peach Juice,8}?
+    $Benton's Old-Fashioned{Bourbon,8}[Maple Syrup, Angostura Bitters](Orange Peel)?
+    $Between The Sheets{White Rum,4;Cognac,4;Cointreau,4;Lemon Juice,1}(Orange Peel)?
+    $Bicicletta{Campari,6;Soda Water,3}[2 Portions White Wine](Orange or Lemon Wheel)?
+    $Bijou{Gin,4;Red Vermouth,4;Chartreuse,3}[Orange Bitters](Brandied Cherry)?
+    $Bitter Intentions{Soda Water,6;Campari,8;Lemon Juice,3;Simple Syrup,3;Red Vermouth}(Orange Slice)?
+    $Bitter Tom{Gin,8;Campari,2;Lemon Juice,3;Simple Syrup,2;Soda Water}(grapefruit Peel)?
+    $Black Russian{Coffee Liqueur,4;Vodka,8}?
+    $Bloody Mary{Vodka,8;Tomato Juice,16;Lemon Juice,2}[worcestershire Sauce,hot Sauce](celery Stalk or Lime Wedge)?
+    $Blood And Sand{Scotch,4;Cherry Liqueur,4;Red Vermouth,4;Orange Juice,4}?
+    $Boulevardier{Bourbon,6;Campari,4;Red Vermouth,4}(Orange Peel)?
+    $Brooklyn{Rye,8;White Vermouth,2;Cherry Liqueur,1}[Amer Picon Bitters]?
+    $Brown Derby{Bourbon,6;Grapefruit Juice,3;Honey Syrup,3}(grapefruit Peel)?
+    $Caipiroska{Vodka,8;Lime Juice,4;Simple Syrup,4}(Lime Wedge)?
+    $Champagne Cocktail{Prosecco,8}[Angostura Bitters](Lemon Peel, Sugar)?
+    $Clover Club{Simply Syrup,2;Gin,6;White Vermouth,2;Lemon Juice,2}(Egg Whites and Raspberries)?
+    $Corpse Reviver No. 2{Absinthe, 1;Gin,4;Cointreau,4;Lillet Blanc,4;Lemon Juice,4}(Lemon Peel)?
+    $Cosmopolitan{Vodka,8;Cointreau,4;Cranberry Juice,2;Lime Juice,4}?
+    $Cuba Libre{White Rum,8;Cola,16;Lime Juice,2}?
+    $Daiquiri{White Rum,8;Lime Juice,4;Simple Syrup,3}(Lime Wheel)?
+    $Dark'n'Stormy{Dark Rum,8;Lime Juice,4;Ginger Beer,4}(Lime Wheel)?
+    $De La Louisiane{Rye,8;Benedictine,3;Red Vermouth,2;Absinthe,2}[peychaud's Bitters](Brandied Cherry)?
+    $Death In The Afternoon{Absinthe,1;Prosecco,12;Simple Syrup,1}?
+    $Dirty Martini{Vodka,12;White Vermouth,2}[Olive Brine, olives]?
+    $Dry Martini{Gin,10;White Vermouth,2}[Orange Bitters](Lemon twist)?
+    $Espresso Martini{Vodka,8;Coffee Liqueur,2;Espresso,4;Simple Syrup,2}?
+    $Filibuster{Rye,8;Lemon Juice,3}[maple Syrup,Egg White,angostura Bitters]?
+    $Fitty-fitty Martini{Gin,6;White Vermouth,6}[Orange Bitters](Lemon twist)?
+    $Florodora{Simple Syrup,2;Gin,6;Lime Juice,3;Ginger Ale,4}(raspberries and an orange/lime Wheel)?
+    $Flatiron Martini{Cointreau,1;Vodka,6;Lillet Blanc,6}(Orange Peel)?
+    $French 75{Gin,8;Prosecco,12;Lemon Juice,2;Simple Syrup,1}(Lemon Peel)?
+    $French Martini{Vodka,8;Raspberry Liqueur,2;Pineapple Juice,8}(Lemon Peel)?
+    $Garibaldi{Campari,6;Orange Juice,4}(Orange Wedge)?
+    $Gibson{Gin,8;White Vermouth,4}(Pickled Onion)?
+    $Gimlet{Gin,8;Lime Juice,3;Simple Syrup,3}(Lime Wheel)?
+    $Gin Fizz{Gin,8;Lemon Juice,3;Soda Water,3;Simple Syrup,3}[Orange Bitters]?
+    $Gin & Tonic{Gin,8;Soda Water,4}(Lime Wedge)?
+    $Gin Daisy{Gin,8;Orange Liqueur,3;Lemon Juice,3;Soda Water,8}(Lemon Wheel)?
+    $Gin Rickey{Gin,8;Lime Juice,2;Soda Water,8}(Lime Wheel)?
+    $Gin Sour{Gin,8;Lemon Juice,3;Simple Syrup,3}(Lemon Peel)?
+    $Glasgow Mule{Scotch,6;St. germain,2;Lemon Juice,3;Ginger Beer,4}[Angostura Bitters](Lemon Wheel)?
+    $Go-To{Gin,8;St. germain,2;Lime Juice,3;Ginger Beer;1}(Mint Sprig)?
+    $Harvey Wallbanger{Vodka,6;Galliano,2;Orange Juice,4}(Orange Slice, Brandied Cherry)?
+    $Hemingway Daiquiri{White Rum,8;Cherry Liqueur,2;Lime Juice,3;Grapefruit Juice,2}(Lime Wheel)?
+    $Jungle Bird{Dark Rum,6;Campari,3;Lime Juice,2;Simple Syrup,2;Pineapple Juice,6}(Pineapple Wedge)?
+    $Last Word{Gin,3;Chartreuse,3;Lime Juice,3;Cherry Liqueur,3}(Brandied )?
+    $Lemon Drop Martini{Vodka,4;Cointreau,2;Lemon Juice,3;Simple Syrup,1}(Lemon Wheel)?
+    $Long Island Iced Tea{Gin,2;Tequila,2;White Rum,2;Vodka,2;Cointreau,2;Lemon Juice,2;Cola,4}(Lemon Slice)?
+    $Manhattan{Rye,8;Red Vermouth,4}[Angostura Bitters](Brandied Cherry)?
+    $Margarita{Tequila,5;Cointreau,3;Lime Juice,3}(Lime Wheel)?
+    $Martinez{Gin,4;Red Vermouth,6;Cherry Liqueur,4}[Angostura Bitters](Orange Peel)?
+    $Martini{Gin,8;White Vermouth,4}[Orange Bitters](Lemon Peel)?
+    $Mexican Firing Squad{Tequila,8;Lime Juice,3;Grenadine,3}[Angostura Bitters](Lime Wheel)?
+    $Millionaire Cocktail{Bourbon,8;Grand Marnier,3;Grenadine,2;Lemon Juice,2;Absinthe,1}(nutmeg)?
+    $Mint Julep{Bourbon,8;Simple Syrup,2}(Mint Sprig)?
+    $Mojito{White Rum,8;Soda Water,8}[lime,mint,sugar]?
+    $Moscow Mule{Vodka,8;Ginger Beer,16;Lime Juice,3}(Lime Wheel)?
+    $Mudslide{Vodka,4;Coffee Liqueur,4;Baileys,4}[Cream (Milk)]?
+    $Negroni{Gin,4;Campari,4;Red Vermouth,4}(Orange Peel)?
+    $Negroni Sbagliato{Campari,4;Red Vermouth,4;Prosecco,3}(Orange Peel)?
+    $New York Sour{Bourbon,8;Lemon Juice,4;Simple Syrup,4}[Red Wine]?
+    $Old Pal{Rye,4;Campari,4;White Vermouth,4}(Lemon Peel)?
+    $Old Fashioned{Bourbon,8;Simple Syrup,1}[Angostura Bitters](Orange Peel)?
+    $Painkiller{Rum,6;Pineapple Juice,6;Orange Juice,2}[coconut Cream](nutmet, Mint Sprig)?
+    $Paloma{Tequila,8;Grapefruit Juice,1,lime Juice,2;Simple Syrup,3;Soda Water,3}(grapefruit Wheel)?
+    $Pegu Club{Gin,8;Curacao,3;Lime Juice,3}[Angostura Bitters,orange Bitters](Lime Peel)?
+    $Pimm’s Cup{Pimm’s,8;Lemon Juice,2;Simple Syrup,1;Soda Water,4}[Angostura Bitters](Mint Sprig, Berries, Citrus)?
+    $Pina Colada{White Rum,8;Pineapple Juice,4;Lime Juice,2}[coconut Cream,coconut Milk](Pineapple Wedge)?
+    $Pina Verde{Chartreuse,6;Pineapple Juice,6;Coconut Cream,3;Lime Juice,2}(Mint Sprig)?
+    $Poppa's Pride{Bourbon,8;Ginger Juice,4;Soda Water,8;}[Angostura Bitters](Mint Sprig, Lemon Wedges)?
+    $Pink Martini{Vodka,8;White Vermouth,4;Grenadine,1}?
+    $Pisco Sour{Pisco,8;Lime Juice,3;Simple Syrup,2}[Angostura Bitters,Egg White]?
+    $Planter's Punch{Rum,6;Lime Juice,2;Pineapple Juice,4;Orange Juice,2;Grenadine,1}(Pineapple Slice, Citrus Wheel, Mint Sprig)?
+    $Queen's Park Swizzle{Simple Syrup,4;Lime Juice,4;Rum,8}[Angostura Bitters](Mint Sprig)?
+    $Ramos Gin Fizz{Gin,8;Lemon Juice,2;Lime Juice,2;Simple Syrup,2;Soda Water,8}[Egg White,Cream](Lime Peel)?
+    $Revolver{Bourbon,8;Coffee Liqueur,2}[Orange Bitters](Orange Peel)?
+    $Remember The Maine{Absinthe,1;Rye,8;Red Vermouth,3;Cherry Liqueur,2}(Brandied Cherry)?
+    $Rob Roy{Scotch,8;Sweet Vermouth,4}[Angostura Bitters](Brandied Cherry)?
+    $Rome With A View{Campari,4;White Vermouth,4;Lime Juice,4;Simple Syrup,3;Soda Water,1}(Orange Slice)?
+    $Sazarec{Absinthe,1;Soda Water,2;Rye,8}[peychaud's Bitters](Lemon Peel)?
+    $Sex On The Beach{Vodka,6;Peach Schnapps,2;Cranberry Juice,4;Orange Juice,2}?
+    $Sidecar{Cognac,8;Cointreau,3;Lemon Juice,3}(Orange Peel)?
+    $Singapore Sling{Gin,6;Cherry Liqueur,1;Cointreau,1;Benedictine,1;Pineapple Juice,3;Lime Juice,4;Grenadine,1}[Angostura Bitters](Brandied Cherry, Pineapple Wedge, Sprig of Mint)?
+    $Sloe Gin Fizz{Soda Water,4;Gin,6;Lemon Juice,3;Simple Syrup,2}[Egg White]?
+    $Southside{Simple Syrup,3;Gin,8;Lime Juice,3}[Orange Bitters](Mint Sprig)?
+    $Tequila Sunrise{Tequila,4;Orange Juice,16;Grenadine,4}?
+    $TI' Punch{Simple Syrup,1;Rum,8}(Lime Wedge)?
+    $Tom Collins{Gin,6;Lemon Juice,3;Simple Syrup,3;Soda Water,2}(Brandied Cherry)?
+    $Vesper{Gin,12;Vodka,4;Lillet Blanc,2}(Lemon Peel)?
+    $Vieux Carre{Rye,4;Cognac,4;Red Vermouth,4;Benedictine,1}[peychaud's Bitters,angostura Bitters](Orange or Lemon Peel)?
+    $Whiskey Smash{Simple Syrup,2;Rye,6;Lemon Juice,1}(Mint Sprig, Lemon Wheel)?
+    $Whiskey Sour{Bourbon,8;Lemon Juice,3;Simple Syrup,3}[Egg White]?
+    $White Russian{Coffee Liqueur,4;Vodka,4}[Milk]?
+    $Woo Woo{Vodka,4;Peach Schnapps,2;Cranberry Juice,8}(Lime Wedge)?
+    
+    

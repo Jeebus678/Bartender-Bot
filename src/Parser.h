@@ -1,8 +1,9 @@
 #ifndef PARSER_H_
 #define PARSER_H_
+// #pragma once
 #include <SD.h>
 #include <stdio.h>
-#include <Pump.h>
+#include "Pump.h"
 
 class parser
 {
@@ -11,12 +12,14 @@ public:
     typedef struct Ingridient
     {
         char liquor[30];
-        char portion[2];
+        int portion;
     } Ingridient;
 
     struct Drink
     {
         char name[30];
+        char note[30];
+        char garnish[30];
         Ingridient ingridients[8];
     };
 
@@ -25,25 +28,35 @@ public:
     Drink cocktail;
     unsigned int fileSize;
     unsigned int pos = 0;
+    char required[30]; 
+    char garnish[50]; 
+    char recipe[180]; 
     char buffer[250];
     char readByte;
+    const char newLine = '$';
     const char newArray = '{';
     const char newElement = ';';
     const char divider = ',';
-    const char endLine = '}';
-    const char newLine = '$';
-    char drinksBuffer[20][30]; // Holds list of drink names
+    const char endArray = '}';
+    const char newRequire = '[';
+    const char endRequire = ']';
+    const char newGarnish = '(';
+    const char endGarnish = ')';
+    const char endLine = '?';
+    char drinksBuffer[30][30]; // Holds list of drink names
 
     // Functions
     void clearBuffer();
+    void clearCocktail();
+    void close();
     void setFile(const char *filename);
-    void seekChar(char delimiter);
+    bool seekChar(int position, char delimiter);
     char *bufferString(unsigned int position, char delimiter);
-    void getRecipeString(const char *name);
+    void lexer(const char *name);
     void getRecipe(char *name);
 
     template <size_t N>
-    void getOptions(Pump *(&allPumps)[N])
+    void getOptions(Pump *(&allPumps)[N]) // Gets all possible cocktails 
     {
         if (file)
         {
@@ -68,7 +81,7 @@ public:
                     counter = 0;
                     maxMembers = 0;
                     pos = file.position() + 1;
-                    bufferString(pos, endLine); // Buffer the rest of the string
+                    bufferString(pos, endArray); // Buffer the rest of the string
                     for (p = strtok(buffer, ";"); p != NULL; p = strtok(NULL, ";"))
                     {
                         maxMembers++;
@@ -84,7 +97,7 @@ public:
                         }
                     }
                 }
-                else if ((readByte == endLine) && (counter == maxMembers))
+                else if ((readByte == endArray) && (counter == maxMembers))
                 {
                     file.seek(posStart + 1);
                     bufferString(file.position(), newArray);
@@ -92,7 +105,7 @@ public:
                     drinkCount++;
                 }
             }
-            file.close();
+            // file.close();
             return; 
         }
         else
@@ -101,5 +114,7 @@ public:
         }
     }
 };
+
+extern parser Parser; 
 
 #endif

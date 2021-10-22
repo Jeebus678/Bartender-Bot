@@ -11,10 +11,13 @@ void Pump::init()
   pinMode(pin, OUTPUT);
 }
 
-void Pump::on()
+void Pump::on(int portion)
 {
   digitalWrite(pin, HIGH);
   status = true;
+  lastMillis = millis();
+  delayTime = (portion * secondsPerPortion)*1000; 
+  offMillis = lastMillis + delayTime; 
 }
 
 void Pump::off()
@@ -23,18 +26,8 @@ void Pump::off()
   status = false;
 }
 
-void Pump::label(char *drink)
+void Pump::label(char * drink)
 {
   this->drink = drink;
 }
 
-// void Pump::pump(int *mL, int *millis)
-// {
-//   // unsigned long currentMillis = millis();
-//   // unsigned long lastMillis; 
-//   int secondsPerML = 0.6; 
-//   // lastMillis = currentMillis; 
-//   on();
-//   delay((secondsPerML)*(*mL)*(1000));
-//   off(); 
-// }
