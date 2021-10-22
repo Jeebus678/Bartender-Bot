@@ -14,13 +14,13 @@ void parser::clearBuffer()
 
 void parser::clearCocktail()
 {
-    unsigned int ingrIterate = 0;
+    ingrIter = 0;
     Parser.cocktail.name[0] = '\0';
-    while (Parser.cocktail.ingridients[ingrIterate].liquor[0] != '\0')
+    while (Parser.cocktail.ingridients[ingrIter].liquor[0] != '\0')
     {
-        Parser.cocktail.ingridients[ingrIterate].liquor[0] = '\0';
-        Parser.cocktail.ingridients[ingrIterate].portion = 0;
-        ingrIterate++;
+        Parser.cocktail.ingridients[ingrIter].liquor[0] = '\0';
+        Parser.cocktail.ingridients[ingrIter].portion = 0;
+        ingrIter++;
     }
 }
 
@@ -113,7 +113,7 @@ void parser::lexBufferToCocktail(const char *name)
 void parser::getRecipe(char *name)
 {
     char *token;
-    uint8_t ingrIter = 0;
+    ingrIter = 0;
     uint8_t elements = 0;
     bool recipeString = false;
     lexBufferToCocktail(name); // Stores input name into buffer

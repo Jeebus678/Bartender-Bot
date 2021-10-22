@@ -94,7 +94,7 @@ $Absinthe Frappe{Absinthe,4;Simple Syrup,1;Water,6)?
     $Pisco Sour{Pisco,8;Lime Juice,3;Simple Syrup,2}[Angostura Bitters,Egg White]?
     $Planter's Punch{Rum,6;Lime Juice,2;Pineapple Juice,4;Orange Juice,2;Grenadine,1}(Pineapple Slice, Citrus Wheel, Mint Sprig)?
     $Queen's Park Swizzle{Simple Syrup,4;Lime Juice,4;Rum,8}[Angostura Bitters](Mint Sprig)?
-    $Ramos Gin Fizz{Gin,8;Lemon Juice,2;Lime Juice,2;Simple Syrup,2;Soda Water,8}[Egg White,Cream](Lime Peel)?
+    $Ramos Gin Fizz{Gin,8;Lemon Juice,2;Lime Juice,2;Simple Syrup,2;Soda Water,8}[Egg White, Cream](Lime Peel)?
     $Revolver{Bourbon,8;Coffee Liqueur,2}[Orange Bitters](Orange Peel)?
     $Remember The Maine{Absinthe,1;Rye,8;Red Vermouth,3;Cherry Liqueur,2}(Brandied Cherry)?
     $Rob Roy{Scotch,8;Sweet Vermouth,4}[Angostura Bitters](Brandied Cherry)?
@@ -102,7 +102,7 @@ $Absinthe Frappe{Absinthe,4;Simple Syrup,1;Water,6)?
     $Sazarec{Absinthe,1;Soda Water,2;Rye,8}[peychaud's Bitters](Lemon Peel)?
     $Sex On The Beach{Vodka,6;Peach Schnapps,2;Cranberry Juice,4;Orange Juice,2}?
     $Sidecar{Cognac,8;Cointreau,3;Lemon Juice,3}(Orange Peel)?
-    $Singapore Sling{Gin,6;Cherry Liqueur,1;Cointreau,1;Benedictine,1;Pineapple Juice,3;Lime Juice,4;Grenadine,1}[Angostura Bitters](Brandied Cherry, Pineapple Wedge, Sprig of Mint)?
+    $Singapore Sling{Gin,6;Cherry Liqueur,1;Cointreau,1;Benedictine,1;Pineapple Juice,3;Lime Juice,4;Grenadine,1}[Angostura Bitters]?
     $Sloe Gin Fizz{Soda Water,4;Gin,6;Lemon Juice,3;Simple Syrup,2}[Egg White]?
     $Southside{Simple Syrup,3;Gin,8;Lime Juice,3}[Orange Bitters](Mint Sprig)?
     $Tequila Sunrise{Tequila,4;Orange Juice,16;Grenadine,4}?

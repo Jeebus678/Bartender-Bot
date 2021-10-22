@@ -57,7 +57,7 @@ void draw::drawKeyboard()
     int vertical = 1;
     int horizontal = 0;
     int space = tft.width() / 5;
-    for (int i = 0; i < 26; i++)
+    for (int buttonsIter = 0; buttonsIter < 26; buttonsIter++)
     {
         horizontal++;
         if (horizontal % 5 == 0)
@@ -65,12 +65,12 @@ void draw::drawKeyboard()
             horizontal = 1;
             vertical++;
         }
-        if (i == 24)
+        if (buttonsIter == 24)
         {
             horizontal++;
         }
-        buttons[i].initButton(&tft, (horizontal * space), (vertical * 60) + 20, 50, 50, WHITE, BLACK, WHITE, alphabet[i], 2);
-        buttons[i].drawButton(false);
+        buttons[buttonsIter].initButton(&tft, (horizontal * space), (vertical * 60) + 20, 50, 50, WHITE, BLACK, WHITE, alphabet[buttonsIter], 2);
+        buttons[buttonsIter].drawButton(false);
     }
     waitKeyboard();
 }

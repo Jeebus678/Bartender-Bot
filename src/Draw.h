@@ -26,11 +26,11 @@ using namespace std;
 class draw
 {
 private:
-    const int XP = 6, XM = A2, YP = A1, YM = 7; //320x480 ID=0x1581
+    const int XP = 6, XM = A2, YP = A1, YM = 7; // 320x480 ID=0x1581
     const int TS_LEFT = 170, TS_RT = 929, TS_TOP = 174, TS_BOT = 967;
     MCUFRIEND_kbv tft;
     TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
-    String version = "1.0";
+    char version[4] = "1.0";
     int16_t BOXSIZE;
     uint16_t ID;
     uint16_t xpos, ypos;
@@ -41,53 +41,54 @@ private:
     void fillBody();
     void drawHome();
     void drawReturn();
-    void drawSettings(); 
+    void drawSettings();
     void drawHeader();
     void drawLoading(int x, int y);
     void drawPourButton();
 
 public:
-    Adafruit_GFX_Button settingsBtn, returnBtn, homeBtn, randomBtn, browseBtn, pourBtn, customBtn, pumpBtn, forwardBtn, backBtn, pushPumps; 
-     Adafruit_GFX_Button A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z;
-    Adafruit_GFX_Button buttons[26] = {A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z};
-    char alphabet[26][4] = {" A ", " B ", " C ", " D ", " E ", " F ", " G ", " H ", " I ", " J ", " K ", " L ", " M ", " N ", " O ", " P ", " Q ", " R ", " S ", " T ", " U ", " V ", " W ", " X ", " Y ", " Z "};
+    Adafruit_GFX_Button PROGMEM settingsBtn, returnBtn, homeBtn, randomBtn, browseBtn, pourBtn, customBtn, pumpBtn, forwardBtn, backBtn, pushPumps;
+    Adafruit_GFX_Button PROGMEM A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z;
+    Adafruit_GFX_Button PROGMEM buttons[26] = {A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z};
+    const PROGMEM char alphabet[26][4] = {" A ", " B ", " C ", " D ", " E ", " F ", " G ", " H ", " I ", " J ", " K ", " L ", " M ", " N ", " O ", " P ", " Q ", " R ", " S ", " T ", " U ", " V ", " W ", " X ", " Y ", " Z "};
 
+    void drawSettingsPage();
     void setupTFT();
     void drawSetup();
     void drawBrowse(bool previousDrink, bool nextDrink);
-    int detectHeader();
-    int drawDrink();
-    bool drawSplash();
-    int drawMenu();
-    bool initHeaderButtons();
-    char waitKeyboard(); 
     void drawKeyboard();
     void drawKeypad();
-    void drawSettingsPage(); 
+    int detectHeader();
+    int drawDrink();
+    int drawMenu();
+    bool drawSplash();
+    bool initHeaderButtons();
+    char waitKeyboard();
+
     bool detectTouch(Adafruit_GFX_Button btn);
 
     template <size_t N>
-    void drawCustom(Pump *(&allPumps)[N])
+    void drawAllPumps(Pump *(&allPumps)[N])
     {
         fillBody();
-        for (int i = 0; i < N; i++)
+        for (int pumpsIter = 0; pumpsIter < N; pumpsIter++)
         {
-            if ((i % 2) == 0)
+            if ((pumpsIter % 2) == 0)
             {
-                pumpBtn.initButton(&tft, (tft.width() / 3) - 25, (tft.height() / 2 + 200) - (30 * i), 140, 50, WHITE, WHITE, BLACK, allPumps[i]->drink, 1);
-                pumpBtn.drawButton(false);
+                allPumps[pumpsIter]->pumpButton.initButton(&tft, (tft.width() / 3) - 25, (tft.height() / 2 + 200) - (30 * pumpsIter), 140, 50, WHITE, WHITE, BLACK, allPumps[pumpsIter]->drink, 1);
+                allPumps[pumpsIter]->pumpButton.drawButton(false);
             }
-            else if ((i % 2) == 1)
+            else if ((pumpsIter % 2) == 1)
             {
-                pumpBtn.initButton(&tft, ((tft.width() / 3) * 2) + 25, (tft.height() / 2 + 200) - (30 * (i - 1)), 140, 50, WHITE, WHITE, BLACK, allPumps[i]->drink, 1);
-                pumpBtn.drawButton(false);
+                allPumps[pumpsIter]->pumpButton.initButton(&tft, ((tft.width() / 3) * 2) + 25, (tft.height() / 2 + 200) - (30 * (pumpsIter - 1)), 140, 50, WHITE, WHITE, BLACK, allPumps[pumpsIter]->drink, 1);
+                allPumps[pumpsIter]->pumpButton.drawButton(false);
             }
         }
         while (true)
         {
             if (detectHeader() > 0)
             {
-                break; 
+                break;
             }
         }
     }

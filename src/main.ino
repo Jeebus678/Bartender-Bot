@@ -18,6 +18,8 @@ unsigned int longestDuration;
 bool found;
 int drinksBufferElement = 0;
 int drinksBufferSize = 0;
+int ingrIter = 0; 
+int pumpIter = 0;
 const uint8_t chipSelect = 10; // Sets the SD chip-select pin, enabled on Mega through SOFT-SPI
 
 void setup()
@@ -83,7 +85,7 @@ void loop()
         }
         else if (Draw.detectTouch(Draw.customBtn))
         {
-            Draw.drawCustom(allPumps);
+            Draw.drawAllPumps(allPumps);
         }
         else if (Draw.detectTouch(Draw.browseBtn))
         {
@@ -123,11 +125,11 @@ void loop()
 
 void enableDrinkPumps(char drinkName[30])
 {
-    int ingrIter = 0;
+    ingrIter = 0;
     longestDuration = 0;
     while (Parser.cocktail.ingridients[ingrIter].liquor[0] != '\0')
     {
-        for (int pumpIter = 0; pumpIter < sizeof(allPumps); pumpIter++)
+        for (pumpIter = 0; pumpIter < sizeof(allPumps); pumpIter++)
         {
             if (strcmp(allPumps[pumpIter]->drink, Parser.cocktail.ingridients[ingrIter].liquor) == 0)
             {
@@ -148,7 +150,7 @@ void waitForPumps()
     while (true)
     {
         int stillPouring = 0;
-        for (int pumpIter = 0; pumpIter < 14; pumpIter++)
+        for (pumpIter = 0; pumpIter < 14; pumpIter++)
         {
             if (allPumps[pumpIter]->status)
             {

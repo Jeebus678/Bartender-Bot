@@ -28,10 +28,11 @@ public:
     Drink cocktail;
     unsigned int fileSize;
     unsigned int savePos = 0;
+    uint8_t ingrIter = 0;
     char required[30]; 
-    char garnish[50]; 
-    char recipe[180]; 
-    char buffer[250];
+    char garnish[30]; 
+    char recipe[150]; 
+    char buffer[150];
     char readByte;
     const char newLine = '$';
     const char newArray = '{';
@@ -43,7 +44,7 @@ public:
     const char newGarnish = '(';
     const char endGarnish = ')';
     const char endLine = '?';
-    char drinksBuffer[30][30]; // Holds list of drink names
+    PROGMEM char drinksBuffer[30][30]; // Holds list of drink names
 
     // Functions
     void clearBuffer();
@@ -65,12 +66,12 @@ public:
             fileSize = file.size();
             savePos = 0;
             int posStart;
-            int counter = 0;
-            int drinkCount = 0;
-            int maxMembers = 0;
-            for (unsigned int i = savePos; i < fileSize; i++) // Loop through entire file
+            int8_t counter = 0;
+            int8_t drinkCount = 0;
+            int8_t maxMembers = 0;
+            for (unsigned int filePos = savePos; filePos < fileSize; filePos++) // Loop through entire file
             {
-                file.seek(i);
+                file.seek(filePos);
                 readByte = file.peek();
                 if (readByte == newLine)
                 {

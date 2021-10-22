@@ -3,23 +3,24 @@
 #include <Arduino.h>
 #include <EEPROM.h>
 #include <String.h>
+#include <Adafruit_GFX.h>
 using namespace std;
 
 class Pump
 {
 private:
-    unsigned char pin;       
-    const float pumpRate = 100;                                 // mL per minute
-    const float portionSize = 10;                                  // mL per shot
-    const float secondsPerPortion = 6; // # of seconds to keep a pump on per portion
+    unsigned char pin;
+    const uint8_t portionSize = 10;      // mL per shot
+    const uint8_t secondsPerPortion = 6; // # of seconds to keep a pump on per portion
 
-public: 
+public:
+    Adafruit_GFX_Button pumpButton; 
     unsigned long lastMillis;
-    unsigned long delayTime;  // Milisecond delay time per portions required
-    unsigned long offMillis; 
+    unsigned int delayTime; // Milisecond delay time per portions required
+    unsigned long offMillis;
     char *drink;
     bool status = false;
-    int capacity; 
+    int capacity;
     Pump(unsigned char pin);
     void label(char *drink);
     void init();
