@@ -1,0 +1,23 @@
+#include <Arduino.h>
+#include <Pump.h>
+
+Pump pump1(23), pump2(25), pump3(27), pump4(29), pump5(31), pump6(33), pump7(35), pump8(37), pump9(39), pump10(41), pump11(43), pump12(45), pump13(47), pump14(49);
+Pump *allPumps[14] = {&pump1, &pump2, &pump3, &pump4, &pump5, &pump6, &pump7, &pump8, &pump9, &pump10, &pump11, &pump12, &pump13, &pump14};
+
+void setup()
+{
+    Serial.begin(9600);
+    Serial.println("Testing all pumps 1-14");
+}
+
+void loop()
+{
+    for (int i = 0; i < sizeof(allPumps); i++)
+    {
+        Serial.print("Pump #");
+        Serial.println(i+1);
+        allPumps[i]->on(2);
+        delay(5000);
+        allPumps[i]->off();
+    }
+}
