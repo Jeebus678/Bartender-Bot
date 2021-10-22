@@ -66,16 +66,7 @@ void loop()
     {
         if (Draw.detectTouch(Draw.randomBtn))
         {
-            int randNumber;
-            if (randNumber != random(drinksBufferSize))
-            {
-                randNumber = random(drinksBufferSize);
-            }
-            else if (randNumber == random(drinksBufferSize))
-            {
-                randNumber++;
-            }
-            Parser.getRecipe(Parser.drinksBuffer[randNumber]);
+            Parser.getRecipe(Parser.drinksBuffer[randomInt()]);
             Draw.drawDrink();
             while (true)
             {
@@ -90,76 +81,47 @@ void loop()
                 }
             }
         }
-        if (Draw.detectTouch(Draw.customBtn))
+        else if (Draw.detectTouch(Draw.customBtn))
         {
             Draw.drawCustom(allPumps);
         }
-        if (Draw.detectTouch(Draw.browseBtn))
+        else if (Draw.detectTouch(Draw.browseBtn))
         {
-            char keyboardChar = initKeyboard(); 
-            while (!searchDrink(keyboardChar))
+            char inputChar = drawKeyboardWaitForChar();
+            while (!searchDrinkInBuffer(inputChar))
             {
-                keyboardChar = initKeyboard();
+                inputChar = drawKeyboardWaitForChar();
             }
-            callDrawBrowse();
+            drawDrinkNavigator();
             while (true)
             {
                 if (Draw.detectTouch(Draw.forwardBtn))
                 {
-                    drinksBufferElement++;
-                    callDrawBrowse();
+                    drawNextDrink();
                 }
                 else if (Draw.detectTouch(Draw.backBtn))
                 {
-                    drinksBufferElement--;
-                    callDrawBrowse();
+                    drawPreviousDrink();
                 }
                 else if (Draw.detectTouch(Draw.pourBtn))
                 {
                     pour();
                     break;
                 }
-                else if (Draw.detectHeader() > 0)
+                else if (detectHeaderInput())
                 {
                     break;
                 }
             }
         }
-        switch (Draw.detectHeader())
+        else if (detectHeaderInput())
         {
-        case (1):
-            Draw.drawMenu();
             break;
-        case (2):
-            Draw.drawSettingsPage();
-            while (true)
-            {
-                if (Draw.detectTouch(Draw.pushPumps))
-                {
-                    for (int i = 0; i < 14; i++)
-                    {
-                        Serial.print("Pump #");
-                        Serial.println(i + 1);
-                        allPumps[i]->on(2);
-                        delay(5000);
-                        allPumps[i]->off();
-                    }
-                    break;
-                }
-                else if (Draw.detectHeader() > 0)
-                {
-                    break;
-                }
-            }
-        case (3):
-            break;
-        default:
-            continue;
         }
     }
 }
 
-void fill(char drinkName[30])
+void enableDrinkPumps(char drinkName[30])
 {
     int ingrIter = 0;
     longestDuration = 0;
@@ -181,26 +143,26 @@ void fill(char drinkName[30])
     }
 }
 
-void offCheck()
+void waitForPumps()
 {
     while (true)
     {
-        int pouring = 0;
+        int stillPouring = 0;
         for (int pumpIter = 0; pumpIter < 14; pumpIterg++)
         {
             if (allPumps[pumpIter]->status)
             {
                 Serial.println("Device is on");
-                pouring++;
+                stillPouring++;
                 unsigned long currentMillis = millis();
                 if (allPumps[pumpIter]->offMillis < currentMillis)
                 {
                     allPumps[pumpIter]->off();
-                    pouring--;
+                    stillPouring--;
                 }
             }
         }
-        if (pouring == 0)
+        if (stillPouring == 0)
         {
             Serial.println("all devices off");
             break;
@@ -215,7 +177,7 @@ void initGUI()
     Draw.drawMenu();
 }
 
-bool searchDrink(char x)
+bool searchDrinkInBuffer(char x)
 {
     drinksBufferElement = 0;
     while (Parser.drinksBuffer[drinksBufferElement][0] != '\0')
@@ -229,13 +191,25 @@ bool searchDrink(char x)
     return false;
 }
 
-void callDrawBrowse()
+void drawNextDrink()
+{
+    drinksBufferElement++;
+    drawDrinkNavigator();
+}
+
+void drawPreviousDrink()
+{
+    drinksBufferElement--;
+    drawDrinkNavigator();
+}
+
+void drawDrinkNavigator()
 {
     Parser.getRecipe(Parser.drinksBuffer[drinksBufferElement]);
     Draw.drawBrowse();
 }
 
-char initKeyboard()
+char drawKeyboardWaitForChar()
 {
     Draw.drawKeyboard();
     char x = Draw.waitKeyboard();
@@ -244,7 +218,61 @@ char initKeyboard()
 
 void pour()
 {
-    fill(Parser.cocktail.name);
-    offCheck();
+    enableDrinkPumps(Parser.cocktail.name);
+    waitForPumps();
     Draw.drawMenu();
+}
+
+int randomInt()
+{
+    int randNumber;
+    if (randNumber != random(drinksBufferSize))
+    {
+        return randNumber = random(drinksBufferSize);
+    }
+    else if (randNumber == random(drinksBufferSize))
+    {
+        return randNumber++;
+    }
+}
+
+bool detectHeaderInput()
+{
+    switch (Draw.detectHeader())
+    {
+    case (1):
+        Draw.drawMenu();
+        return true;
+    case (2):
+        drawSettingsPage();
+        return true;
+    case (3):
+        break;
+    default:
+        continue;
+    }
+}
+
+void drawSettingsPage()
+{
+    Draw.drawSettingsPage();
+    while (true)
+    {
+        if (Draw.detectTouch(Draw.pushPumps))
+        {
+            for (int i = 0; i < 14; i++)
+            {
+                Serial.print("Pump #");
+                Serial.println(i + 1);
+                allPumps[i]->on(2);
+                delay(5000);
+                allPumps[i]->off();
+            }
+            return true;
+        }
+        else if (detectHeaderInput())
+        {
+            break;
+        }
+    }
 }
