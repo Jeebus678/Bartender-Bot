@@ -1,12 +1,3 @@
-// Basic SD card parser
-//
-// Function Architechture:
-// Once the parse() function is called it passes the name parameter to
-// lexer(). It scans through the file, looking for an item with a
-// matching name (so $_name_ for example). lexer() also calls on
-// bufferString() multiple times, which reads starting from a position
-// until a delimiter from the SD card.
-
 #include "parser.h"
 #include <SD.h>
 #include <stdio.h>
@@ -33,7 +24,7 @@ void parser::clearCocktail()
     }
 }
 
-void parser::close()
+void parser::closeFile()
 {
     file.close();
 }
@@ -45,76 +36,75 @@ void parser::setFile(const char *filename)
 
 bool parser::seekChar(int position, char delimiter)
 { // Will set and return the position of the next desired delimiter
-    int i = 0;
-    while (buffer[i] != '\0')
+    int bufferPos = 0;
+    while (buffer[bufferPos] != '\0')
     {
-        if (buffer[i] == delimiter)
+        if (buffer[bufferPos] == delimiter)
         {
-            file.seek(position + i + 1);
+            file.seek(position + bufferPos + 1);
             return true;
         }
-        i++;
+        bufferPos++;
     }
     return false;
 }
 
-char *parser::bufferString(unsigned int position, char delimiter)
+char *parser::bufferStringFromFile(unsigned int position, char delimiter)
 { // Get any string from a starting position until a specified delimiter
     clearBuffer();
     file.seek(position + 1);
-    for (unsigned int n = file.position();; n++) // Iterate forward infinitely
+    for (unsigned int filePos = file.position();; filePos++) // Iterate forward infinitely
     {
-        file.seek(n);
+        file.seek(filePos);
         readByte = file.peek();
         if (readByte == delimiter) // If delimiter detected
         {
             file.seek(position);
-            file.read(buffer, n - position);
+            file.read(buffer, filePos - position);
             return buffer;
         }
     }
 }
 
-void parser::lexer(const char *name)
+void parser::lexBufferToCocktail(const char *name)
 { // Split up the buffer string into according sub strings
     if (file)
     {
         fileSize = file.size();
-        pos = 0;
-        for (unsigned int i = pos; i <= fileSize; i++) // Loop through entire file
+        savePos = 0;
+        for (unsigned int filePos = savePos; filePos <= fileSize; filePos++) // Loop through entire file
         {
-            file.seek(i);
+            file.seek(filePos);
             readByte = file.peek();
             if (readByte == newLine) // Stop at every new line
             {
-                pos = file.position();
-                bufferString(pos + 1, newArray);
-                if (strcmp(buffer, name) == 0) // Does the name match the input parameter?
+                savePos = file.position();
+                bufferStringFromFile(savePos + 1, newArray);
+                if (strcmp(buffer, name) == 0) 
                 {
-                    bufferString(pos + 1, endLine);
-                    seekChar(pos, newArray);
-                    bufferString(pos + 1, endArray);
+                    bufferStringFromFile(savePos + 1, endLine);
+                    seekChar(savePos, newArray);
+                    bufferStringFromFile(savePos + 1, endArray);
                     strcpy(Parser.recipe, buffer);
-                    bufferString(pos + 1, endLine);
+                    bufferStringFromFile(savePos + 1, endLine);
                     Serial.println(buffer);
-                    if (seekChar(pos, newRequire))
+                    if (seekChar(savePos, newRequire))
                     { // If '[' is a char in the buffer
-                        bufferString(file.position() + 1, endRequire);
+                        bufferStringFromFile(file.position() + 1, endRequire);
                         strcpy(Parser.required, buffer);
                         Serial.println(Parser.required);
-                        bufferString(pos + 1, endLine);
+                        bufferStringFromFile(savePos + 1, endLine);
                     }
-                    if (seekChar(pos, newGarnish))
+                    if (seekChar(savePos, newGarnish))
                     { // If '(' is a char in the buffer
-                        bufferString(file.position() + 1, endGarnish);
+                        bufferStringFromFile(file.position() + 1, endGarnish);
                         strcpy(Parser.garnish, buffer);
                         Serial.println(Parser.garnish);
-                        bufferString(pos + 1, endLine);
+                        bufferStringFromFile(savePos + 1, endLine);
                     }
                 }
             }
         }
-        // file.close();
     }
     else
         Serial.println("Error: Failed to open file.");
@@ -122,41 +112,41 @@ void parser::lexer(const char *name)
 
 void parser::getRecipe(char *name)
 {
-    char *p;
-    uint8_t n = 0;
-    uint8_t iter = 0;
+    char *token;
+    uint8_t ingrIter = 0;
+    uint8_t elements = 0;
     bool recipeString = false;
-    lexer(name); // Stores input name into buffer
+    lexBufferToCocktail(name); // Stores input name into buffer
     clearCocktail();
-    for (p = strtok(recipe, ",;{}"); p != NULL; p = strtok(NULL, ",;{}"))
+    for (token = strtok(recipe, ",;{}"); token != NULL; token = strtok(NULL, ",;{}"))
     {
         if (recipeString == false) // If name is not read
         {
-            strcpy(Parser.cocktail.name, p);
+            strcpy(Parser.cocktail.name, token);
             recipeString = true;
         }
         else if (recipeString == true) // If name is read
         {
-            if ((iter % 2) == 0) // Evens are liquor names
+            if ((elements % 2) == 0) // Evens are liquor names
             {
-                strcpy(Parser.cocktail.ingridients[n].liquor, p);
-                iter++;
+                strcpy(Parser.cocktail.ingridients[ingrIter].liquor, token);
+                elements++;
             }
-            else if ((iter % 2) == 1) // Odds are portion sizes
+            else if ((elements % 2) == 1) // Odds are portion sizes
             {
-                Parser.cocktail.ingridients[n].portion = atoi(p);
-                iter++;
-                n++; // Iterate through ingridients[8]
+                Parser.cocktail.ingridients[ingrIter].portion = atoi(token);
+                elements++;
+                ingrIter++; // Iterate through ingridients[8]
             }
         }
     }
     // Used for troubleshooting- comment out when not needed
     // Serial.println(Parser.cocktail.name);
-    // unsigned int i = 0;
-    // while (Parser.cocktail.ingridients[i].liquor[0] != '\0')
+    // ingrIter = 0;
+    // while (Parser.cocktail.ingridients[ingrIter].liquor[0] != '\0')
     // {
-    //     Serial.println(Parser.cocktail.ingridients[i].liquor);
-    //     Serial.println(Parser.cocktail.ingridients[i].portion);
-    //     i++;
+    //     Serial.println(Parser.cocktail.ingridients[ingrIter].liquor);
+    //     Serial.println(Parser.cocktail.ingridients[ingrIter].portion);
+    //     ingrIter++;
     // }
 }

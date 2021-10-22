@@ -35,16 +35,17 @@ void draw::fillBody()
     tft.fillRect(0, 50, tft.width(), tft.height(), BLACK);
 }
 
-char draw::waitKeyboard(){
+char draw::waitKeyboard()
+{
     while (true)
     {
-        bool pressed = Touch_getXY();
-        for (int i = 0; i < sizeof(buttons); i++)
+        bool pressed = getTouchCoords();
+        for (int buttonsElement = 0; buttonsElement < sizeof(buttons); buttonsElement++)
         {
-            if (pressed && buttons[i].contains(xpos, ypos))
+            if (pressed && buttons[buttonsElement].contains(xpos, ypos))
             {
-                Serial.println(alphabet[i][1]);
-                return alphabet[i][1];
+                Serial.println(alphabet[buttonsElement][1]);
+                return alphabet[buttonsElement][1];
             }
         }
     }
@@ -71,13 +72,14 @@ void draw::drawKeyboard()
         buttons[i].initButton(&tft, (horizontal * space), (vertical * 60) + 20, 50, 50, WHITE, BLACK, WHITE, alphabet[i], 2);
         buttons[i].drawButton(false);
     }
-    waitKeyboard(); 
+    waitKeyboard();
 }
 
-void draw::drawSettingsPage(){
-    fillBody(); 
-    pushPumps.initButton(&tft, tft.width()/2, tft.height()/2, 200, 100, WHITE, BLACK, WHITE, "Push Pumps", 2);
-    pushPumps.drawButton(false); 
+void draw::drawSettingsPage()
+{
+    fillBody();
+    pushPumps.initButton(&tft, tft.width() / 2, tft.height() / 2, 200, 100, WHITE, BLACK, WHITE, "Push Pumps", 2);
+    pushPumps.drawButton(false);
 }
 
 void draw::drawLoading(int x, int y)
@@ -112,12 +114,12 @@ void draw::drawLoading(int x, int y)
     }
 }
 
-bool draw::Touch_getXY(void)
+bool draw::getTouchCoords(void)
 {
     TSPoint tp = ts.getPoint();
-    pinMode(YP, OUTPUT); //restore shared pins
+    pinMode(YP, OUTPUT); // restore shared pins
     pinMode(XM, OUTPUT);
-    digitalWrite(YP, HIGH); //because TFT control pins
+    digitalWrite(YP, HIGH); // because TFT control pins
     digitalWrite(XM, HIGH);
     bool pressed = (tp.z > MINPRESSURE && tp.z < MAXPRESSURE);
     if (pressed)
@@ -130,7 +132,7 @@ bool draw::Touch_getXY(void)
 
 bool draw::detectTouch(Adafruit_GFX_Button btn)
 {
-    down = Touch_getXY();
+    down = getTouchCoords();
     btn.press(down && btn.contains(xpos, ypos));
     if (btn.justPressed())
     {
@@ -156,13 +158,19 @@ int draw::detectHeader()
     }
 }
 
-void draw::drawBrowse()
+void draw::drawBrowse(bool previousDrink, bool nextDrink)
 {
     forwardBtn.initButton(&tft, (tft.width() / 6) * 5, tft.height() / 2 - 40, 60, 100, BLACK, BLACK, WHITE, ">", 5);
     backBtn.initButton(&tft, (tft.width() / 6), tft.height() / 2 - 40, 60, 100, BLACK, BLACK, WHITE, "<", 5);
     drawDrink();
-    forwardBtn.drawButton(false);
-    backBtn.drawButton(false);
+    if (previousDrink)
+    {
+        backBtn.drawButton(false);
+    }
+    if (nextDrink)
+    {
+        forwardBtn.drawButton(false);
+    }
 }
 
 void draw::printCenter(char *str)
@@ -178,18 +186,18 @@ void draw::printCenter(char *str)
 
 int draw::drawDrink()
 {
-    uint8_t i = 0;
+    uint8_t ingrIter = 0;
     fillBody();
     tft.setCursor(60, 75);
     tft.setTextSize(3);
     tft.setTextColor(WHITE);
     printCenter(Parser.cocktail.name);
-    while (Parser.cocktail.ingridients[i].liquor[0] != '\0')
+    while (Parser.cocktail.ingridients[ingrIter].liquor[0] != '\0')
     {
         tft.setTextSize(2);
-        tft.setCursor(60, (24 * i) + 120);
-        printCenter(Parser.cocktail.ingridients[i].liquor);
-        i++;
+        tft.setCursor(60, (24 * ingrIter) + 120);
+        printCenter(Parser.cocktail.ingridients[ingrIter].liquor);
+        ingrIter++;
     }
     if (Parser.required[0] != '\0')
     {

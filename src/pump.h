@@ -1,6 +1,7 @@
 #ifndef PUMP_H
 #define PUMP_H
 #include <Arduino.h>
+#include <EEPROM.h>
 #include <String.h>
 using namespace std;
 
@@ -18,6 +19,7 @@ public:
     unsigned long offMillis; 
     char *drink;
     bool status = false;
+    int capacity; 
     Pump(unsigned char pin);
     void label(char *drink);
     void init();

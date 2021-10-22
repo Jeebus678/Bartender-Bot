@@ -36,7 +36,7 @@ private:
     uint16_t xpos, ypos;
     bool down;
 
-    bool Touch_getXY(void);
+    bool getTouchCoords(void);
     void printCenter(char *string);
     void fillBody();
     void drawHome();
@@ -54,7 +54,7 @@ public:
 
     void setupTFT();
     void drawSetup();
-    void drawBrowse();
+    void drawBrowse(bool previousDrink, bool nextDrink);
     int detectHeader();
     int drawDrink();
     bool drawSplash();

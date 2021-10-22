@@ -41,16 +41,16 @@ void setup()
     pump4.label("White Vermouth");
     pump5.label("Dark rum");
     pump6.label("Tequila");
-    pump7.label("empty");
+    pump7.label("Malibu");
     pump8.label("Red Vermouth");
     pump9.label("Campari");
-    pump10.label("empty");
-    pump11.label("empty");
-    pump12.label("Scotch");
+    pump10.label("Baileys");
+    pump11.label("Kahlua");
+    pump12.label("Gin");
     pump13.label("Lemon Juice");
     pump14.label("Vodka");
     Parser.setFile("RECIPES.txt");
-    Parser.getOptions(allPumps);
+    Parser.getPossibleDrinkOptions(allPumps);
     while (Parser.drinksBuffer[drinksBufferElement] != '\0')
     {
         Serial.println(Parser.drinksBuffer[drinksBufferElement]);
@@ -66,7 +66,7 @@ void loop()
     {
         if (Draw.detectTouch(Draw.randomBtn))
         {
-            Parser.getRecipe(Parser.drinksBuffer[randomInt()]);
+            Parser.getRecipe(Parser.drinksBuffer[getRandomInt()]);
             Draw.drawDrink();
             while (true)
             {
@@ -148,7 +148,7 @@ void waitForPumps()
     while (true)
     {
         int stillPouring = 0;
-        for (int pumpIter = 0; pumpIter < 14; pumpIterg++)
+        for (int pumpIter = 0; pumpIter < 14; pumpIter++)
         {
             if (allPumps[pumpIter]->status)
             {
@@ -205,8 +205,16 @@ void drawPreviousDrink()
 
 void drawDrinkNavigator()
 {
+    bool previousDrink = false;
+    bool nextDrink = false; 
+    if(Parser.drinksBuffer[drinksBufferElement++] != '\0'){
+        nextDrink = true; 
+    }
+    if(Parser.drinksBuffer[drinksBufferElement--] != '\0'){
+        previousDrink = true; 
+    }
     Parser.getRecipe(Parser.drinksBuffer[drinksBufferElement]);
-    Draw.drawBrowse();
+    Draw.drawBrowse(previousDrink, nextDrink);
 }
 
 char drawKeyboardWaitForChar()
@@ -223,7 +231,7 @@ void pour()
     Draw.drawMenu();
 }
 
-int randomInt()
+int getRandomInt()
 {
     int randNumber;
     if (randNumber != random(drinksBufferSize))
@@ -247,9 +255,9 @@ bool detectHeaderInput()
         drawSettingsPage();
         return true;
     case (3):
-        break;
+        return true;
     default:
-        continue;
+        return false;
     }
 }
 

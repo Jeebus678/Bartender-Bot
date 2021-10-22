@@ -27,7 +27,7 @@ public:
     File file;
     Drink cocktail;
     unsigned int fileSize;
-    unsigned int pos = 0;
+    unsigned int savePos = 0;
     char required[30]; 
     char garnish[50]; 
     char recipe[180]; 
@@ -48,27 +48,27 @@ public:
     // Functions
     void clearBuffer();
     void clearCocktail();
-    void close();
+    void closeFile();
     void setFile(const char *filename);
     bool seekChar(int position, char delimiter);
-    char *bufferString(unsigned int position, char delimiter);
-    void lexer(const char *name);
+    char *bufferStringFromFile(unsigned int position, char delimiter);
+    void lexBufferToCocktail(const char *name);
     void getRecipe(char *name);
 
     template <size_t N>
-    void getOptions(Pump *(&allPumps)[N]) // Gets all possible cocktails 
+    void getPossibleDrinkOptions(Pump *(&allPumps)[N]) // Gets all possible cocktails 
     {
         if (file)
         {
             char *p;
             char *o;
             fileSize = file.size();
-            pos = 0;
+            savePos = 0;
             int posStart;
             int counter = 0;
             int drinkCount = 0;
             int maxMembers = 0;
-            for (unsigned int i = pos; i < fileSize; i++) // Loop through entire file
+            for (unsigned int i = savePos; i < fileSize; i++) // Loop through entire file
             {
                 file.seek(i);
                 readByte = file.peek();
@@ -80,8 +80,8 @@ public:
                 {
                     counter = 0;
                     maxMembers = 0;
-                    pos = file.position() + 1;
-                    bufferString(pos, endArray); // Buffer the rest of the string
+                    savePos = file.position() + 1;
+                    bufferStringFromFile(savePos, endArray); // Buffer the rest of the string
                     for (p = strtok(buffer, ";"); p != NULL; p = strtok(NULL, ";"))
                     {
                         maxMembers++;
@@ -100,12 +100,12 @@ public:
                 else if ((readByte == endArray) && (counter == maxMembers))
                 {
                     file.seek(posStart + 1);
-                    bufferString(file.position(), newArray);
+                    bufferStringFromFile(file.position(), newArray);
                     strcpy(drinksBuffer[drinkCount], buffer);
                     drinkCount++;
                 }
             }
-            // file.close();
+            // file.closeFile();
             return; 
         }
         else
