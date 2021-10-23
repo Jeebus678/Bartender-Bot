@@ -160,8 +160,8 @@ int draw::detectHeader()
 
 void draw::drawBrowse(bool previousDrink, bool nextDrink)
 {
-    forwardBtn.initButton(&tft, (tft.width() / 6) * 5, tft.height() / 2 - 40, 60, 100, BLACK, BLACK, WHITE, ">", 5);
-    backBtn.initButton(&tft, (tft.width() / 6), tft.height() / 2 - 40, 60, 100, BLACK, BLACK, WHITE, "<", 5);
+    forwardBtn.initButton(&tft, (tft.width() / 12) * 11, tft.height() / 2 - 40, 45, 100, BLACK, BLACK, WHITE, ">", 5);
+    backBtn.initButton(&tft, (tft.width() / 12), tft.height() / 2 - 40, 45, 100, BLACK, BLACK, WHITE, "<", 5);
     drawDrink();
     if (previousDrink)
     {

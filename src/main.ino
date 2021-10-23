@@ -18,7 +18,7 @@ unsigned int longestDuration;
 bool found;
 int drinksBufferElement = 0;
 int drinksBufferSize = 0;
-int ingrIter = 0; 
+int ingrIter = 0;
 int pumpIter = 0;
 const uint8_t chipSelect = 10; // Sets the SD chip-select pin, enabled on Mega through SOFT-SPI
 
@@ -38,22 +38,22 @@ void setup()
     }
     Serial.println("SD initialization done.");
     pump1.label("Simple Syrup");
-    pump2.label("Cointreau");
+    pump2.label("Tequila");
     pump3.label("Cherry Liqueur");
-    pump4.label("White Vermouth");
+    pump4.label("Cointreau");
     pump5.label("Dark rum");
-    pump6.label("Tequila");
-    pump7.label("Malibu");
+    pump6.label("Malibu");
+    pump7.label("White Vermouth");
     pump8.label("Red Vermouth");
     pump9.label("Campari");
-    pump10.label("Baileys");
-    pump11.label("Kahlua");
-    pump12.label("Gin");
+    pump10.label("Gin");
+    pump11.label("Coffee Liqueur");
+    pump12.label("Baileys");
     pump13.label("Lemon Juice");
     pump14.label("Vodka");
     Parser.setFile("RECIPES.txt");
     Parser.getPossibleDrinkOptions(allPumps);
-    while (Parser.drinksBuffer[drinksBufferElement] != '\0')
+    while (Parser.drinksBuffer[drinksBufferElement][0] != '\0')
     {
         Serial.println(Parser.drinksBuffer[drinksBufferElement]);
         drinksBufferElement++;
@@ -68,20 +68,7 @@ void loop()
     {
         if (Draw.detectTouch(Draw.randomBtn))
         {
-            Parser.getRecipe(Parser.drinksBuffer[getRandomInt()]);
-            Draw.drawDrink();
-            while (true)
-            {
-                if (Draw.detectTouch(Draw.pourBtn))
-                {
-                    pour();
-                    break;
-                }
-                else if (Draw.detectHeader() > 0)
-                {
-                    break;
-                }
-            }
+            drawRandomDrink();
         }
         else if (Draw.detectTouch(Draw.customBtn))
         {
@@ -208,12 +195,14 @@ void drawPreviousDrink()
 void drawDrinkNavigator()
 {
     bool previousDrink = false;
-    bool nextDrink = false; 
-    if(Parser.drinksBuffer[drinksBufferElement++] != '\0'){
-        nextDrink = true; 
+    bool nextDrink = false;
+    if (Parser.drinksBuffer[drinksBufferElement++] != '\0')
+    {
+        nextDrink = true;
     }
-    if(Parser.drinksBuffer[drinksBufferElement--] != '\0'){
-        previousDrink = true; 
+    if (Parser.drinksBuffer[drinksBufferElement--] != '\0')
+    {
+        previousDrink = true;
     }
     Parser.getRecipe(Parser.drinksBuffer[drinksBufferElement]);
     Draw.drawBrowse(previousDrink, nextDrink);
@@ -257,6 +246,7 @@ bool detectHeaderInput()
         drawSettingsPage();
         return true;
     case (3):
+        drawRandomDrink(); 
         return true;
     default:
         return false;
@@ -281,6 +271,24 @@ void drawSettingsPage()
             return true;
         }
         else if (detectHeaderInput())
+        {
+            break;
+        }
+    }
+}
+
+void drawRandomDrink()
+{
+    Parser.getRecipe(Parser.drinksBuffer[getRandomInt()]);
+    Draw.drawDrink();
+    while (true)
+    {
+        if (Draw.detectTouch(Draw.pourBtn))
+        {
+            pour();
+            break;
+        }
+        else if (Draw.detectHeader() > 0)
         {
             break;
         }

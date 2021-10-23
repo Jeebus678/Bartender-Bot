@@ -14,11 +14,21 @@ void parser::clearBuffer()
 
 void parser::clearCocktail()
 {
+    int erase = 0;
     ingrIter = 0;
-    Parser.cocktail.name[0] = '\0';
+    while (Parser.cocktail.name[erase] != '\0')
+    {
+        Parser.cocktail.name[erase];
+        erase++;
+    }
+    erase = 0;
     while (Parser.cocktail.ingridients[ingrIter].liquor[0] != '\0')
     {
-        Parser.cocktail.ingridients[ingrIter].liquor[0] = '\0';
+        while (Parser.cocktail.ingridients[ingrIter].liquor[erase] != '\0')
+        {
+            Parser.cocktail.ingridients[ingrIter].liquor[erase] = '\0';
+            erase++;
+        }
         Parser.cocktail.ingridients[ingrIter].portion = 0;
         ingrIter++;
     }
@@ -72,6 +82,7 @@ void parser::lexBufferToCocktail(const char *name)
     {
         fileSize = file.size();
         savePos = 0;
+        const char erase = '\0';
         for (unsigned int filePos = savePos; filePos <= fileSize; filePos++) // Loop through entire file
         {
             file.seek(filePos);
@@ -80,7 +91,7 @@ void parser::lexBufferToCocktail(const char *name)
             {
                 savePos = file.position();
                 bufferStringFromFile(savePos + 1, newArray);
-                if (strcmp(buffer, name) == 0) 
+                if (strcmp(buffer, name) == 0)
                 {
                     bufferStringFromFile(savePos + 1, endLine);
                     seekChar(savePos, newArray);
@@ -95,12 +106,20 @@ void parser::lexBufferToCocktail(const char *name)
                         Serial.println(Parser.required);
                         bufferStringFromFile(savePos + 1, endLine);
                     }
+                    else
+                    {
+                        strcpy(Parser.required, "");
+                    }
                     if (seekChar(savePos, newGarnish))
                     { // If '(' is a char in the buffer
                         bufferStringFromFile(file.position() + 1, endGarnish);
                         strcpy(Parser.garnish, buffer);
                         Serial.println(Parser.garnish);
                         bufferStringFromFile(savePos + 1, endLine);
+                    }
+                    else
+                    {
+                        strcpy(Parser.garnish, "");
                     }
                 }
             }
@@ -117,7 +136,7 @@ void parser::getRecipe(char *name)
     uint8_t elements = 0;
     bool recipeString = false;
     lexBufferToCocktail(name); // Stores input name into buffer
-    clearCocktail();
+    // clearCocktail();
     for (token = strtok(recipe, ",;{}"); token != NULL; token = strtok(NULL, ",;{}"))
     {
         if (recipeString == false) // If name is not read
@@ -140,6 +159,7 @@ void parser::getRecipe(char *name)
             }
         }
     }
+    cutExtraVarsFromCocktail(ingrIter);
     // Used for troubleshooting- comment out when not needed
     // Serial.println(Parser.cocktail.name);
     // ingrIter = 0;
@@ -149,4 +169,15 @@ void parser::getRecipe(char *name)
     //     Serial.println(Parser.cocktail.ingridients[ingrIter].portion);
     //     ingrIter++;
     // }
+}
+
+void parser::cutExtraVarsFromCocktail(int ingrIter)
+{
+    if (Parser.cocktail.ingridients[ingrIter].liquor[0] != '\0')
+    {
+        strcpy(Parser.cocktail.ingridients[ingrIter].liquor, "");
+        Parser.cocktail.ingridients[ingrIter].portion = 0;
+        ingrIter++;
+        cutExtraVarsFromCocktail(ingrIter);
+    }
 }

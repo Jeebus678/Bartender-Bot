@@ -47,10 +47,10 @@ private:
     void drawPourButton();
 
 public:
-    Adafruit_GFX_Button PROGMEM settingsBtn, returnBtn, homeBtn, randomBtn, browseBtn, pourBtn, customBtn, pumpBtn, forwardBtn, backBtn, pushPumps;
-    Adafruit_GFX_Button PROGMEM A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z;
-    Adafruit_GFX_Button PROGMEM buttons[26] = {A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z};
-    const PROGMEM char alphabet[26][4] = {" A ", " B ", " C ", " D ", " E ", " F ", " G ", " H ", " I ", " J ", " K ", " L ", " M ", " N ", " O ", " P ", " Q ", " R ", " S ", " T ", " U ", " V ", " W ", " X ", " Y ", " Z "};
+    Adafruit_GFX_Button settingsBtn, returnBtn, homeBtn, randomBtn, browseBtn, pourBtn, customBtn, pumpBtn, forwardBtn, backBtn, pushPumps;
+    Adafruit_GFX_Button A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z;
+    Adafruit_GFX_Button buttons[26] = {A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z};
+    const char alphabet[26][4] = {" A ", " B ", " C ", " D ", " E ", " F ", " G ", " H ", " I ", " J ", " K ", " L ", " M ", " N ", " O ", " P ", " Q ", " R ", " S ", " T ", " U ", " V ", " W ", " X ", " Y ", " Z "};
 
     void drawSettingsPage();
     void setupTFT();
@@ -70,27 +70,27 @@ public:
     template <size_t N>
     void drawAllPumps(Pump *(&allPumps)[N])
     {
-        fillBody();
-        for (int pumpsIter = 0; pumpsIter < N; pumpsIter++)
-        {
-            if ((pumpsIter % 2) == 0)
-            {
-                allPumps[pumpsIter]->pumpButton.initButton(&tft, (tft.width() / 3) - 25, (tft.height() / 2 + 200) - (30 * pumpsIter), 140, 50, WHITE, WHITE, BLACK, allPumps[pumpsIter]->drink, 1);
-                allPumps[pumpsIter]->pumpButton.drawButton(false);
-            }
-            else if ((pumpsIter % 2) == 1)
-            {
-                allPumps[pumpsIter]->pumpButton.initButton(&tft, ((tft.width() / 3) * 2) + 25, (tft.height() / 2 + 200) - (30 * (pumpsIter - 1)), 140, 50, WHITE, WHITE, BLACK, allPumps[pumpsIter]->drink, 1);
-                allPumps[pumpsIter]->pumpButton.drawButton(false);
-            }
-        }
-        while (true)
-        {
-            if (detectHeader() > 0)
-            {
-                break;
-            }
-        }
+        // fillBody();
+        // for (int pumpsIter = 0; pumpsIter < N; pumpsIter++)
+        // {
+        //     if ((pumpsIter % 2) == 0)
+        //     {
+        //         allPumps[pumpsIter]->pumpButton.initButton(&tft, (tft.width() / 3) - 25, (tft.height() / 2 + 200) - (30 * pumpsIter), 140, 50, WHITE, WHITE, BLACK, allPumps[pumpsIter]->drink, 1);
+        //         allPumps[pumpsIter]->pumpButton.drawButton(false);
+        //     }
+        //     else if ((pumpsIter % 2) == 1)
+        //     {
+        //         allPumps[pumpsIter]->pumpButton.initButton(&tft, ((tft.width() / 3) * 2) + 25, (tft.height() / 2 + 200) - (30 * (pumpsIter - 1)), 140, 50, WHITE, WHITE, BLACK, allPumps[pumpsIter]->drink, 1);
+        //         allPumps[pumpsIter]->pumpButton.drawButton(false);
+        //     }
+        // }
+        // while (true)
+        // {
+        //     if (detectHeader() > 0)
+        //     {
+        //         break;
+        //     }
+        // }
     }
 };
 

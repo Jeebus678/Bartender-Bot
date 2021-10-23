@@ -7,6 +7,9 @@
 
 class parser
 {
+private: 
+    void cutExtraVarsFromCocktail(int ingrIter); 
+
 public:
     // Struct for storing SD variables
     typedef struct Ingridient
@@ -31,7 +34,7 @@ public:
     uint8_t ingrIter = 0;
     char required[30]; 
     char garnish[30]; 
-    char recipe[150]; 
+    char recipe[180]; 
     char buffer[150];
     char readByte;
     const char newLine = '$';
