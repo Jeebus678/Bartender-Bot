@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <Adafruit_GFX.h>
 #include <Scheduler.h>
 #include <SD.h>
 #include <SPI.h>
@@ -43,8 +44,8 @@ void setup()
     pump4.label("Cointreau");
     pump5.label("Dark rum");
     pump6.label("Malibu");
-    pump7.label("White Vermouth");
-    pump8.label("Red Vermouth");
+    pump7.label("Lime Juice");
+    pump8.label("Pineapple Juice");
     pump9.label("Campari");
     pump10.label("Gin");
     pump11.label("Coffee Liqueur");
@@ -66,21 +67,20 @@ void loop()
 {
     while (true)
     {
-        if (Draw.detectTouch(Draw.randomBtn))
+        if (Draw.detectTouch(Draw.randomBtn)) // If "Random" pressed
         {
             drawRandomDrink();
         }
-        else if (Draw.detectTouch(Draw.customBtn))
+        else if (Draw.detectTouch(Draw.customBtn)) // If "Custom" pressed
         {
             Draw.drawAllPumps(allPumps);
-        }
-        else if (Draw.detectTouch(Draw.browseBtn))
-        {
-            char inputChar = drawKeyboardWaitForChar();
-            while (!searchDrinkInBuffer(inputChar))
+            while (true)
             {
-                inputChar = drawKeyboardWaitForChar();
+                getPumpButtonResponse();
             }
+        }
+        else if (Draw.detectTouch(Draw.browseBtn)) // If "Browse" pressed
+        {
             drawDrinkNavigator();
             while (true)
             {
@@ -102,6 +102,7 @@ void loop()
                     break;
                 }
             }
+            //}
         }
         else if (detectHeaderInput())
         {
@@ -166,20 +167,6 @@ void initGUI()
     Draw.drawMenu();
 }
 
-bool searchDrinkInBuffer(char x)
-{
-    drinksBufferElement = 0;
-    while (Parser.drinksBuffer[drinksBufferElement][0] != '\0')
-    {
-        if (Parser.drinksBuffer[drinksBufferElement][0] == x)
-        {
-            return true;
-        }
-        drinksBufferElement++;
-    }
-    return false;
-}
-
 void drawNextDrink()
 {
     drinksBufferElement++;
@@ -196,24 +183,18 @@ void drawDrinkNavigator()
 {
     bool previousDrink = false;
     bool nextDrink = false;
-    if (Parser.drinksBuffer[drinksBufferElement++] != '\0')
+    if (drinksBufferElement++ > drinksBufferSize)
     {
-        nextDrink = true;
+        nextDrink = false;
     }
-    if (Parser.drinksBuffer[drinksBufferElement--] != '\0')
+    if (drinksBufferElement-- < 0)
     {
-        previousDrink = true;
+        previousDrink = false;
     }
     Parser.getRecipe(Parser.drinksBuffer[drinksBufferElement]);
     Draw.drawBrowse(previousDrink, nextDrink);
 }
 
-char drawKeyboardWaitForChar()
-{
-    Draw.drawKeyboard();
-    char x = Draw.waitKeyboard();
-    return x;
-}
 
 void pour()
 {
@@ -246,7 +227,7 @@ bool detectHeaderInput()
         drawSettingsPage();
         return true;
     case (3):
-        drawRandomDrink(); 
+        drawRandomDrink();
         return true;
     default:
         return false;
@@ -258,18 +239,7 @@ void drawSettingsPage()
     Draw.drawSettingsPage();
     while (true)
     {
-        if (Draw.detectTouch(Draw.pushPumps))
-        {
-            for (int i = 0; i < 14; i++)
-            {
-                Serial.print("Pump #");
-                Serial.println(i + 1);
-                allPumps[i]->on(2);
-                delay(5000);
-                allPumps[i]->off();
-            }
-            return true;
-        }
+        Draw.drawAllPumps(allPumps); 
         else if (detectHeaderInput())
         {
             break;
@@ -288,8 +258,32 @@ void drawRandomDrink()
             pour();
             break;
         }
-        else if (Draw.detectHeader() > 0)
+        else if (detectHeaderInput())
         {
+            break;
+        }
+    }
+}
+
+void getPumpButtonResponse()
+{
+    for (pumpIter = 0; pumpIter < sizeof(allPumps); pumpIter++)
+    {
+        bool pressed = Draw.getTouchCoords();
+        if (pressed && allPumps[pumpIter]->pumpButton.contains(Draw.xpos, Draw.ypos))
+        {
+            if (allPumps[pumpIter]->status)
+            {
+                allPumps[pumpIter]->off();
+            }
+            else
+            {
+                allPumps[pumpIter]->on(0);
+            }
+        }
+        else if (detectHeaderInput())
+        {
+            Serial.println("header input detected");
             break;
         }
     }
