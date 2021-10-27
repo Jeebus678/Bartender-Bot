@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include <Adafruit_GFX.h>
-#include <Scheduler.h>
 #include <SD.h>
 #include <SPI.h>
 #include "Pump.h"
