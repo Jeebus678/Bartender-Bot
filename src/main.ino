@@ -54,10 +54,9 @@ void setup()
     pump14.label("Vodka");
     Parser.setFile("RECIPES.txt");
     Parser.getPossibleDrinkOptions(allPumps);
-    while (Parser.drinksBuffer[drinksBufferElement][0] != '\0')
+    while (Parser.drinksBuffer[drinksBufferSize][0] != '\0')
     {
-        Serial.println(Parser.drinksBuffer[drinksBufferElement]);
-        drinksBufferElement++;
+        Serial.println(Parser.drinksBuffer[drinksBufferSize]);
         drinksBufferSize++;
     }
     initGUI();
@@ -76,33 +75,15 @@ void loop()
             Draw.drawAllPumps(allPumps);
             while (true)
             {
-                getPumpButtonResponse();
+                manualPumpControl();
+                detectHeaderInput();
             }
         }
         else if (Draw.detectTouch(Draw.browseBtn)) // If "Browse" pressed
         {
+            drinksBufferElement = 0; 
             drawDrinkNavigator();
-            while (true)
-            {
-                if (Draw.detectTouch(Draw.forwardBtn))
-                {
-                    drawNextDrink();
-                }
-                else if (Draw.detectTouch(Draw.backBtn))
-                {
-                    drawPreviousDrink();
-                }
-                else if (Draw.detectTouch(Draw.pourBtn))
-                {
-                    pour();
-                    break;
-                }
-                else if (detectHeaderInput())
-                {
-                    break;
-                }
-            }
-            //}
+            getDrinkNavigatorResponse(); 
         }
         else if (detectHeaderInput())
         {
@@ -142,7 +123,6 @@ void waitForPumps()
         {
             if (allPumps[pumpIter]->status)
             {
-                Serial.println("Device is on");
                 stillPouring++;
                 unsigned long currentMillis = millis();
                 if (allPumps[pumpIter]->offMillis < currentMillis)
@@ -154,7 +134,6 @@ void waitForPumps()
         }
         if (stillPouring == 0)
         {
-            Serial.println("all devices off");
             break;
         }
     }
@@ -181,20 +160,19 @@ void drawPreviousDrink()
 
 void drawDrinkNavigator()
 {
-    bool previousDrink = false;
-    bool nextDrink = false;
-    if (drinksBufferElement++ > drinksBufferSize)
+    bool previousDrink = true;
+    bool nextDrink = true;
+    if ((drinksBufferElement+1) > drinksBufferSize)
     {
         nextDrink = false;
     }
-    if (drinksBufferElement-- < 0)
+    if ((drinksBufferElement-1) < 0)
     {
         previousDrink = false;
     }
     Parser.getRecipe(Parser.drinksBuffer[drinksBufferElement]);
     Draw.drawBrowse(previousDrink, nextDrink);
 }
-
 
 void pour()
 {
@@ -236,14 +214,12 @@ bool detectHeaderInput()
 
 void drawSettingsPage()
 {
-    Draw.drawSettingsPage();
+    Draw.fillBody();
+    Draw.drawAllPumps(allPumps);
     while (true)
     {
-        Draw.drawAllPumps(allPumps); 
-        else if (detectHeaderInput())
-        {
-            break;
-        }
+        automaticPumpControl();
+        detectHeaderInput();
     }
 }
 
@@ -265,12 +241,12 @@ void drawRandomDrink()
     }
 }
 
-void getPumpButtonResponse()
+void manualPumpControl()
 {
     for (pumpIter = 0; pumpIter < sizeof(allPumps); pumpIter++)
     {
         bool pressed = Draw.getTouchCoords();
-        if (pressed && allPumps[pumpIter]->pumpButton.contains(Draw.xpos, Draw.ypos))
+        if (getPumpButtonStatus(pressed))
         {
             if (allPumps[pumpIter]->status)
             {
@@ -281,10 +257,56 @@ void getPumpButtonResponse()
                 allPumps[pumpIter]->on(0);
             }
         }
-        else if (detectHeaderInput())
+    }
+}
+
+void automaticPumpControl()
+{
+    for (pumpIter = 0; pumpIter < sizeof(allPumps); pumpIter++)
+    {
+        unsigned long currentMillis;
+        bool pressed = Draw.getTouchCoords();
+        if (getPumpButtonStatus(pressed) && allPumps[pumpIter]->status != true)
         {
-            Serial.println("header input detected");
-            break;
+            currentMillis = millis();
+            allPumps[pumpIter]->on(0);
+            allPumps[pumpIter]->offMillis = currentMillis + 5500;
         }
     }
+    waitForPumps();
+}
+
+bool getPumpButtonStatus(bool pressed)
+{
+    if (pressed && allPumps[pumpIter]->pumpButton.contains(Draw.xpos, Draw.ypos))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void getDrinkNavigatorResponse(){
+    while (true)
+            {
+                if (Draw.detectTouch(Draw.forwardBtn))
+                {
+                    drawNextDrink();
+                }
+                else if (Draw.detectTouch(Draw.backBtn))
+                {
+                    drawPreviousDrink();
+                }
+                else if (Draw.detectTouch(Draw.pourBtn))
+                {
+                    pour();
+                    break;
+                }
+                else if (detectHeaderInput())
+                {
+                    break;
+                }
+            }
 }
