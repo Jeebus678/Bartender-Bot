@@ -1,5 +1,5 @@
 # BartenderBot
-Bartender App ran on Arduino Mega, utilizing Adafruit_GFX GUI library and my SD Parser library. The build cost me about 200$ for all the materials and took over 40 hours of work to assemble. 
+Bartender App running on an Arduino Mega, utilizing Adafruit_GFX GUI library and my SD Parser library. The build cost me about 200$ for all the materials and took over 40 hours of work to assemble. 
 
 For all the images, click [here](https://imgur.com/gallery/96sP3pC). 
 
