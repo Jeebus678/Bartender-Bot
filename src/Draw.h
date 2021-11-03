@@ -33,12 +33,8 @@ private:
     char version[4] = "1.0";
     int16_t BOXSIZE;
     uint16_t ID;
-    uint16_t xpos, ypos;
     bool down;
-
-    bool getTouchCoords(void);
     void printCenter(char *string);
-    void fillBody();
     void drawHome();
     void drawReturn();
     void drawSettings();
@@ -47,50 +43,48 @@ private:
     void drawPourButton();
 
 public:
-    Adafruit_GFX_Button settingsBtn, returnBtn, homeBtn, randomBtn, browseBtn, pourBtn, customBtn, pumpBtn, forwardBtn, backBtn, pushPumps;
-    Adafruit_GFX_Button A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z;
-    Adafruit_GFX_Button buttons[26] = {A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z};
-    const char alphabet[26][4] = {" A ", " B ", " C ", " D ", " E ", " F ", " G ", " H ", " I ", " J ", " K ", " L ", " M ", " N ", " O ", " P ", " Q ", " R ", " S ", " T ", " U ", " V ", " W ", " X ", " Y ", " Z "};
+    uint16_t xpos, ypos;
+    Adafruit_GFX_Button settingsBtn,
+        returnBtn,
+        homeBtn,
+        randomBtn,
+        browseBtn,
+        pourBtn,
+        customBtn,
+        pumpBtn,
+        forwardBtn,
+        backBtn,
+        pushPumps;
 
-    void drawSettingsPage();
+    bool getTouchCoords(void);
+    bool detectTouch(Adafruit_GFX_Button btn);
     void setupTFT();
     void drawSetup();
     void drawBrowse(bool previousDrink, bool nextDrink);
-    void drawKeyboard();
-    void drawKeypad();
+    void fillBody();
     int detectHeader();
     int drawDrink();
     int drawMenu();
     bool drawSplash();
     bool initHeaderButtons();
-    char waitKeyboard();
-
-    bool detectTouch(Adafruit_GFX_Button btn);
 
     template <size_t N>
     void drawAllPumps(Pump *(&allPumps)[N])
     {
-        // fillBody();
-        // for (int pumpsIter = 0; pumpsIter < N; pumpsIter++)
-        // {
-        //     if ((pumpsIter % 2) == 0)
-        //     {
-        //         allPumps[pumpsIter]->pumpButton.initButton(&tft, (tft.width() / 3) - 25, (tft.height() / 2 + 200) - (30 * pumpsIter), 140, 50, WHITE, WHITE, BLACK, allPumps[pumpsIter]->drink, 1);
-        //         allPumps[pumpsIter]->pumpButton.drawButton(false);
-        //     }
-        //     else if ((pumpsIter % 2) == 1)
-        //     {
-        //         allPumps[pumpsIter]->pumpButton.initButton(&tft, ((tft.width() / 3) * 2) + 25, (tft.height() / 2 + 200) - (30 * (pumpsIter - 1)), 140, 50, WHITE, WHITE, BLACK, allPumps[pumpsIter]->drink, 1);
-        //         allPumps[pumpsIter]->pumpButton.drawButton(false);
-        //     }
-        // }
-        // while (true)
-        // {
-        //     if (detectHeader() > 0)
-        //     {
-        //         break;
-        //     }
-        // }
+        fillBody();
+        for (int pumpIter = 0; pumpIter < N; pumpIter++)
+        {
+            if ((pumpIter % 2) == 0)
+            {
+                allPumps[pumpIter]->pumpButton.initButton(&tft, (tft.width() / 3) - 25, (tft.height() / 2 + 200) - (30 * pumpIter), 140, 50, WHITE, WHITE, BLACK, allPumps[pumpIter]->drink, 1);
+                allPumps[pumpIter]->pumpButton.drawButton(false);
+            }
+            else if ((pumpIter % 2) == 1)
+            {
+                allPumps[pumpIter]->pumpButton.initButton(&tft, ((tft.width() / 3) * 2) + 25, (tft.height() / 2 + 200) - (30 * (pumpIter - 1)), 140, 50, WHITE, WHITE, BLACK, allPumps[pumpIter]->drink, 1);
+                allPumps[pumpIter]->pumpButton.drawButton(false);
+            }
+        }
     }
 };
 

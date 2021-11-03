@@ -47,7 +47,7 @@ public:
     const char newGarnish = '(';
     const char endGarnish = ')';
     const char endLine = '?';
-    PROGMEM char drinksBuffer[30][30]; // Holds list of drink names
+    char drinksBuffer[30][30]; // Holds list of drink names
 
     // Functions
     void clearBuffer();

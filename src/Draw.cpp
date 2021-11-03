@@ -2,6 +2,36 @@
 #include "Bitmaps.h"
 #include "Numpad.h"
 
+bool draw::detectTouch(Adafruit_GFX_Button btn)
+{
+    down = getTouchCoords();
+    btn.press(down && btn.contains(xpos, ypos));
+    if (btn.justPressed())
+    {
+        return true;
+    }
+    else
+        return false;
+}
+
+int draw::detectHeader()
+{
+    if (detectTouch(homeBtn))
+    {
+        return 1;
+    }
+    if (detectTouch(settingsBtn))
+    {
+        return 2;
+    }
+    if (detectTouch(returnBtn))
+    {
+        return 3;
+    }
+    else
+        return 0;
+}
+
 void draw::drawSettings()
 {
     settingsBtn.initButton(&tft, (tft.width() / 2) - 80, 0, 50, 100, BLACK, BLACK, BLACK, " ", 1);
@@ -35,52 +65,6 @@ void draw::fillBody()
     tft.fillRect(0, 50, tft.width(), tft.height(), BLACK);
 }
 
-char draw::waitKeyboard()
-{
-    while (true)
-    {
-        bool pressed = getTouchCoords();
-        for (int buttonsElement = 0; buttonsElement < sizeof(buttons); buttonsElement++)
-        {
-            if (pressed && buttons[buttonsElement].contains(xpos, ypos))
-            {
-                Serial.println(alphabet[buttonsElement][1]);
-                return alphabet[buttonsElement][1];
-            }
-        }
-    }
-}
-
-void draw::drawKeyboard()
-{
-    fillBody();
-    int vertical = 1;
-    int horizontal = 0;
-    int space = tft.width() / 5;
-    for (int buttonsIter = 0; buttonsIter < 26; buttonsIter++)
-    {
-        horizontal++;
-        if (horizontal % 5 == 0)
-        {
-            horizontal = 1;
-            vertical++;
-        }
-        if (buttonsIter == 24)
-        {
-            horizontal++;
-        }
-        buttons[buttonsIter].initButton(&tft, (horizontal * space), (vertical * 60) + 20, 50, 50, WHITE, BLACK, WHITE, alphabet[buttonsIter], 2);
-        buttons[buttonsIter].drawButton(false);
-    }
-    waitKeyboard();
-}
-
-void draw::drawSettingsPage()
-{
-    fillBody();
-    pushPumps.initButton(&tft, tft.width() / 2, tft.height() / 2, 200, 100, WHITE, BLACK, WHITE, "Push Pumps", 2);
-    pushPumps.drawButton(false);
-}
 
 void draw::drawLoading(int x, int y)
 {
@@ -124,38 +108,10 @@ bool draw::getTouchCoords(void)
     bool pressed = (tp.z > MINPRESSURE && tp.z < MAXPRESSURE);
     if (pressed)
     {
-        xpos = map(tp.x, TS_LEFT, TS_RT, 0, tft.width()); //.kbv makes sense to me
+        xpos = map(tp.x, TS_LEFT, TS_RT, 0, tft.width());
         ypos = map(tp.y, TS_TOP, TS_BOT, 0, tft.height());
     }
     return pressed;
-}
-
-bool draw::detectTouch(Adafruit_GFX_Button btn)
-{
-    down = getTouchCoords();
-    btn.press(down && btn.contains(xpos, ypos));
-    if (btn.justPressed())
-    {
-        return true;
-    }
-    else
-        return false;
-}
-
-int draw::detectHeader()
-{
-    if (detectTouch(homeBtn))
-    {
-        return 1;
-    }
-    if (detectTouch(settingsBtn))
-    {
-        return 2;
-    }
-    if (detectTouch(returnBtn))
-    {
-        return 3;
-    }
 }
 
 void draw::drawBrowse(bool previousDrink, bool nextDrink)
