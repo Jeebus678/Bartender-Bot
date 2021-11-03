@@ -1,7 +1,6 @@
 #ifndef PUMP_H
 #define PUMP_H
 #include <Arduino.h>
-#include <EEPROM.h>
 #include <String.h>
 #include <Adafruit_GFX.h>
 using namespace std;

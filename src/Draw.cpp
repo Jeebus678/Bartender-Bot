@@ -1,6 +1,5 @@
 #include "Draw.h"
 #include "Bitmaps.h"
-#include "Numpad.h"
 
 bool draw::detectTouch(Adafruit_GFX_Button btn)
 {
