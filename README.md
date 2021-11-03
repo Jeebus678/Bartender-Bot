@@ -7,3 +7,4 @@ For all the images, click [here](https://imgur.com/gallery/96sP3pC).
 ![splashSreen](https://i.imgur.com/tGzw44V.jpeg)
 ![pipes](https://i.imgur.com/y77VRaD.jpeg)
 ![electronics](https://i.imgur.com/6bPAF2t.jpeg)
+![schematic](https://i.imgur.com/lKe7OXW.jpeg)
